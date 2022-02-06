@@ -1,0 +1,186 @@
+<TextureAtlas imagePath="groundTarmac.png">
+
+	<SubTexture name="ground.png"							x="0" y="0" width="64" height="64"/>
+	<SubTexture name="TopLeft_LShape.png" 					x="64" y="0" width="64" height="64"/>
+	<SubTexture name="Top_Line.png" 						x="128" y="0" width="64" height="64"/>
+	<SubTexture name="Top_TShape.png" 						x="192" y="0" width="64" height="64"/>
+	<SubTexture name="TopRight_LShape.png" 					x="256" y="0" width="64" height="64"/>
+	<SubTexture name="TopLeft_Corner.png" 					x="320" y="0" width="64" height="64"/>
+	<SubTexture name="TopRight_Corner.png"					x="384" y="0" width="64" height="64"/>
+	<SubTexture name="TopLeft_Circle3d.png" 				x="448" y="0" width="64" height="64"/>
+	<SubTexture name="Top_Circle3d.png"						x="512" y="0" width="64" height="64"/>
+	<SubTexture name="TopRight_Circle3d.png"				x="576" y="0" width="64" height="64"/>
+	<SubTexture name="Centerred_TopLeft_LShape.png" 		x="640" y="0" width="64" height="64"/>
+	<SubTexture name="Centerred_TopRight_LShape.png" 		x="704" y="0" width="64" height="64"/>
+	<SubTexture name="Right_ULine.png"						x="768" y="0" width="64" height="64"/>
+
+	<SubTexture name="Centerred_Dot_Full.png" 				x="0" y="64" width="64" height="64"/>
+	<SubTexture name="Left_Line.png" 						x="64" y="64" width="64" height="64"/>
+	<SubTexture name="Centerred_Vertical_Line_Dot.png"		x="128" y="64" width="64" height="64"/>
+	<SubTexture name="Centerred_Vertical_Line.png" 			x="192" y="64" width="64" height="64"/>
+	<SubTexture name="Right_Line.png" 						x="256" y="64" width="64" height="64"/>
+	<SubTexture name="BottomLeft_Corner.png" 				x="320" y="64" width="64" height="64"/>
+	<SubTexture name="BottomRight_Corner.png" 				x="384" y="64" width="64" height="64"/>
+	<SubTexture name="Left_Circle3d.png" 					x="448" y="64" width="64" height="64"/>
+	<SubTexture name="Left_Circle3d_Middle_Line.png"		x="512" y="64" width="64" height="64"/>
+	<SubTexture name="Right_Circle3d.png" 					x="576" y="64" width="64" height="64"/>
+	<SubTexture name="Centerred_Bottom_Left_LShape.png"		x="640" y="64" width="64" height="64"/>
+	<SubTexture name="Centerred_Bottom_Right_LShape.png" 	x="704" y="64" width="64" height="64"/>
+	<SubTexture name="Left_ULine.png" 						x="768" y="64" width="64" height="64"/>
+
+	<SubTexture name="Centerred_Dot_Border.png" 			x="0" y="128" width="64" height="64"/>
+	<SubTexture name="Left_TShape.png"						x="64" y="128" width="64" height="64"/>
+	<SubTexture name="Centerred_Horizontal_Line_Dot.png" 	x="128" y="128" width="64" height="64"/>
+	<SubTexture name="Centerred_Horizontal_Line.png" 		x="192" y="128" width="64" height="64"/>
+	<SubTexture name="Right_TShape.png" 					x="256" y="128" width="64" height="64"/>
+	<SubTexture name="TopLeft_Corner2.png" 					x="320" y="128" width="64" height="64"/>
+	<SubTexture name="TopRight_Corner2.png" 				x="384" y="128" width="64" height="64"/>
+	<SubTexture name="BottomLeft_Circle3d.png" 				x="448" y="128" width="64" height="64"/>
+	<SubTexture name="Bottom_Circle3d.png" 					x="512" y="128" width="64" height="64"/>
+	<SubTexture name="BottomRight_Circle3d.png" 			x="576" y="128" width="64" height="64"/>
+	<SubTexture name="Centerred_TopLeft_LShape2.png" 		x="640" y="128" width="64" height="64"/>
+	<SubTexture name="Centerred_TopRight_LShape2.png" 		x="704" y="128" width="64" height="64"/>
+	<SubTexture name="Top_ULine.png" 						x="768" y="128" width="64" height="64"/>
+
+	<SubTexture name="Centerred_Dot_BorderFull.png" 		x="0" y="192" width="64" height="64"/>
+	<SubTexture name="Bottom_Left_LShape.png" 				x="64" y="192" width="64" height="64"/>
+	<SubTexture name="Bottom_Line.png" 						x="128" y="192" width="64" height="64"/>
+	<SubTexture name="Bottom_TShape.png" 					x="192" y="192" width="64" height="64"/>
+	<SubTexture name="BottomRight_LShape.png" 				x="256" y="192" width="64" height="64"/>
+	<SubTexture name="BottomLeft_Corner2.png" 				x="320" y="192" width="64" height="64"/>
+	<SubTexture name="BottomRight_Corner2.png" 				x="384" y="192" width="64" height="64"/>
+	<SubTexture name="Top_Circle3d_Middle_Line.png" 		x="448" y="192" width="64" height="64"/>
+	<SubTexture name="Right_Circle3d_Middle_Line.png" 		x="512" y="192" width="64" height="64"/>
+	<SubTexture name="Bottom_Circle3d_Middle_Line.png" 		x="576" y="192" width="64" height="64"/>
+	<SubTexture name="Centerred_BottomLeft_LShape2.png" 	x="640" y="192" width="64" height="64"/>
+	<SubTexture name="Centerred_BottomRight_LShape2.png" 	x="704" y="192" width="64" height="64"/>
+	<SubTexture name="Bottom_ULine.png" 					x="768" y="192" width="64" height="64"/>
+	
+<!-- 	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	
+	<SubTexture name="06.png" x="0" y="64" width="64" height="64"/>
+	<SubTexture name="07.png" x="64" y="64" width="64" height="64"/>
+	<SubTexture name="08.png" x="128" y="64" width="64" height="64"/>
+	<SubTexture name="09.png" x="192" y="64" width="64" height="64"/>
+	<SubTexture name="10.png" x="256" y="64" width="64" height="64"/>
+	<SubTexture name="11.png" x="320" y="64" width="64" height="64"/>
+	<SubTexture name="12.png" x="384" y="64" width="64" height="64"/>
+	<SubTexture name="13.png" x="448" y="64" width="64" height="64"/>
+	<SubTexture name="14.png" x="512" y="64" width="64" height="64"/>
+	<SubTexture name="15.png" x="576" y="64" width="64" height="64"/>
+	<SubTexture name="16.png" x="640" y="64" width="64" height="64"/>
+	<SubTexture name="17.png" x="704" y="64" width="64" height="64"/>
+	<SubTexture name="18.png" x="768" y="64" width="64" height="64"/>
+	 -->
+</TextureAtlas>
