@@ -28,8 +28,8 @@ int main() {
     gf::Vector2f mousePosition;
 
     gf::ResourceManager resources;
-    resources.addSearchDir("/home/pierre/Documents/L3/projet/Football/data/groundTarmac.png");
-    gf::TextureAtlas atlas("data/futsal_spritesheet.xml", resources);
+    resources.addSearchDir("data");
+    gf::TextureAtlas atlas("futsal_spritesheet.xml", resources);
 
     Terrain terrain = Terrain(atlas);
 
