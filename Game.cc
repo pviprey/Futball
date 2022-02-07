@@ -6,6 +6,7 @@
 #include <gf/Text.h>
 #include <gf/TextureAtlas.h>
 #include <gf/ResourceManager.h>
+#include <gf/ViewContainer.h>
 #include <gf/Views.h>
 
 #include "Game.h"
@@ -22,8 +23,11 @@ int main() {
     gf::RenderWindow renderer(window);
     
 
-    gf::ExtendView view(gf::vec(97, 23) * 32.0f, gf::vec(97, 23) * 70.0f);
+    gf::ViewContainer views;
 
+    gf::ExtendView view(gf::vec(97, 23) * 32.0f, gf::vec(97, 23) * 70.0f);
+    views.addView(view);
+    view.setInitialFramebufferSize({ 1024, 768 });
 
     /*(ref 2. update)*/
     gf::Clock clock;
@@ -113,7 +117,9 @@ int main() {
 
                 default:
                 break;
-            }                          
+            }
+
+            views.processEvent(event);
         }
 
     // 2. update 60 fois MINIMUM
