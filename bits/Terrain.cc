@@ -8,32 +8,22 @@
 
 namespace{
     const char TERRAIN[] =
-        "O-----------------------------------------------Y-----------------------------------------------P"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "G                                               '                                               D"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               X                                               !"
-        "#                                               '                                               #"
-        "#           .                                (  .  )                                .           #"
-        "#                                               '                                               #"
-        "|                                               x                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "g                                               '                                               d"
-        "|                                               '                                               !"
-        "|                                               '                                               !"
-        "L_______________________________________________y_______________________________________________M"
+        "O------------Y------------P"
+        "|            '            !"
+        "G            '            D"
+        "|            '            !"
+        "|            X            !"
+        "#            '            #"
+        "#   .     (  .  )    .    #"
+        "#            '            #"
+        "|            x            !"
+        "|            '            !"
+        "g            '            d"
+        "|            '            !"
+        "L____________y____________M"
     ;
 
-    constexpr gf::Vector2i TERRAINSIZE = gf::vec(97, 23);
+    constexpr gf::Vector2i TERRAINSIZE = gf::vec(27, 13);
     constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);  
   
 }
@@ -125,7 +115,6 @@ void Terrain::render(gf::RenderTarget& target) {
                 sprite.setTextureRect(LineVertical);
                 break;            
             case Texture::LineHorizontal:
-                sprite.setTextureRect(LineHorizontal);
                 break;            
             case Texture::LineTop:
                 sprite.setTextureRect(LineTop);
