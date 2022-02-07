@@ -6,6 +6,7 @@
 #include <gf/Text.h>
 #include <gf/TextureAtlas.h>
 #include <gf/ResourceManager.h>
+#include <gf/Views.h>
 
 #include "Game.h"
 #include "bits/Terrain.h"
@@ -21,6 +22,8 @@ int main() {
     gf::RenderWindow renderer(window);
     
 
+    gf::ExtendView view(gf::vec(97, 23) * 32.0f, gf::vec(97, 23) * 70.0f);
+
 
     /*(ref 2. update)*/
     gf::Clock clock;
@@ -32,6 +35,7 @@ int main() {
     gf::TextureAtlas atlas("futsal_spritesheet.xml", resources);
 
     Terrain terrain = Terrain(atlas);
+    terrain.setData();
 
 
     // Start the game loop 
@@ -120,9 +124,10 @@ int main() {
 
 
     // Draw the entities
+    renderer.setView(view);
     renderer.clear();
-    renderer.display();
     terrain.render(renderer);
+    renderer.display();
     }
 
     return 0;

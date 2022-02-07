@@ -1,11 +1,13 @@
 #include <gf/Sprite.h>
 
+#include <gf/Color.h>
+
 #include "Terrain.h"
 
 #define GUILLEMET '\''
 
 namespace{
-    const char TERRAIN[] = {
+    const char TERRAIN[] =
         "O-----------------------------------------------Y-----------------------------------------------P"
         "|                                               '                                               !"
         "|                                               '                                               !"
@@ -17,7 +19,7 @@ namespace{
         "|                                               '                                               !"
         "|                                               X                                               !"
         "#                                               '                                               #"
-        "#           ¤                                (  ¤  )                                ¤           #"
+        "#           .                                (  .  )                                .           #"
         "#                                               '                                               #"
         "|                                               x                                               !"
         "|                                               '                                               !"
@@ -29,7 +31,7 @@ namespace{
         "|                                               '                                               !"
         "|                                               '                                               !"
         "L_______________________________________________y_______________________________________________M"
-    };
+    ;
 
     constexpr gf::Vector2i TERRAINSIZE = gf::vec(97, 23);
     constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);  
@@ -56,13 +58,13 @@ Terrain::Terrain(const gf::TextureAtlas& atlas):gf::Entity(1),
   CornerBottomRight(atlas.getTextureRect("BottomRight_Corner.png")),
   CornerBottomLeft(atlas.getTextureRect("BottomLeft_Corner.png")),
 
-  Ground(atlas.getTextureRect("Ground.png"))
+  Ground(atlas.getTextureRect("Ground.png")),
+  tiles(TERRAINSIZE)
   {}
 
 void Terrain::setData() {
 
     Data tb = Data(TERRAIN, TERRAINSIZE);
-    gf::Array2D<Texture, int> tiles(tb.getSize());
 
     for (auto coords : tiles.getPositionRange()) {
         switch (tb(coords)) {
@@ -116,13 +118,6 @@ void Terrain::setData() {
 void Terrain::render(gf::RenderTarget& target) {
     for (auto coords : tiles.getPositionRange()) {
         gf::Sprite sprite(texture);
-        sprite.setPosition(coords * SpriteSize);
-        sprite.setTextureRect(Ground);
-        target.draw(sprite);
-    }
-
-    for (auto coords : tiles.getPositionRange()) {
-        gf::Sprite sprite(texture);
 
         switch (tiles(coords)) {
 
@@ -147,7 +142,7 @@ void Terrain::render(gf::RenderTarget& target) {
 
             case Texture::TShapeTop:
                 sprite.setTextureRect(TShapeTop);
-                break;            
+                break;
             case Texture::TShapeRight:
                 sprite.setTextureRect(TShapeRight);
                 break;            
@@ -177,6 +172,7 @@ void Terrain::render(gf::RenderTarget& target) {
             default:
                 continue;
         }
+
         sprite.setPosition(coords * SpriteSize);
         sprite.setAnchor(gf::Anchor::TopLeft);
         target.draw(sprite);
