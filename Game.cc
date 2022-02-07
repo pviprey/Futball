@@ -21,7 +21,7 @@ int main() {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);    
     gf::RenderWindow renderer(window);
-    
+    window.setFullscreen();
 
     gf::ViewContainer views;
 
@@ -54,7 +54,6 @@ int main() {
                     window.close();
                 break;
                 
-                #if 0
                 case gf::EventType::MouseMoved:
                     mousePosition = renderer.mapPixelToCoords(event.mouseCursor.coords);
                 break;
@@ -79,6 +78,10 @@ int main() {
                         case gf::Keycode::Right:    //droite
                         case gf::Keycode::D:
                             // velocity.x+= Speed;
+                        break;
+
+                        case gf::Keycode::Escape:
+                            window.close();
                         break;
 
                         default:
@@ -113,7 +116,6 @@ int main() {
                         break;
                     }
                 break;
-                #endif
 
                 default:
                 break;
