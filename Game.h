@@ -5,8 +5,9 @@
 #include <iosfwd>
 #include <set>
 #include <string>
-#include "Terrain.h"
 #include <gf/TextureAtlas.h>
+
+#include "bits/Terrain.h"
 
 
 class Game {

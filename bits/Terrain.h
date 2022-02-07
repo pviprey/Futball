@@ -4,29 +4,65 @@
 #include <cstddef>
 #include <iosfwd>
 #include <set>
-#include <gf/Entity.h>
 #include <gf/Vector.h>
+#include <gf/Entity.h>
 #include <gf/TextureAtlas.h>
 #include <gf/Array2D.h>
+#include <gf/RenderTarget.h>
+
+#include "Data.h"
 
 class Terrain : public gf::Entity{
     public:
-        Terrain();
         Terrain(const gf::TextureAtlas& atlas);
 
-        void render(gf::RenderTarget& target, const gf::RenderStates& states) override;        
+        void setData();
+        void render(gf::RenderTarget& target);        
     private:
+        
+        const gf::Texture& texture;
 
-        enum class Textures{
-            Lines,
-            TShape,
-            LShape,
-            Ground,
-            Net
+        gf::RectF LineVertical,
+        LineHorizontal,
+        LineTop,
+        LineRight,
+        LineBottom,
+        LineLeft,
+
+        TShapeTop,
+        TShapeRight,
+        TShapeBottom,
+        TShapeLeft,
+
+        CornerTopRight,
+        CornerTopLeft,
+        CornerBottomRight,
+        CornerBottomLeft,
+
+        Ground;
+
+        enum class Texture{
+            LineVertical,
+            LineHorizontal,
+            LineTop,
+            LineRight,
+            LineBottom,
+            LineLeft,
+
+            TShapeTop,
+            TShapeRight,
+            TShapeBottom,
+            TShapeLeft,
+
+            CornerTopLeft,
+            CornerTopRight,
+            CornerBottomRight,
+            CornerBottomLeft,
+
+            Ground
         };
 
-        const gf::Texture& texture;
-        gf::Array2D<Textures, int> tiles;     
+        gf::Array2D<Texture, int> tiles;
 };
 
 #endif  //TERRAIN_H

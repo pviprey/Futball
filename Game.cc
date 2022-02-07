@@ -8,30 +8,30 @@
 #include <gf/ResourceManager.h>
 
 #include "Game.h"
-#include "Terrain.h"
-#include "Ballon.h"
-#include "Equipe.h"
-#include "Joueur.h"
-
+#include "bits/Terrain.h"
+#include "bits/Ballon.h"
+#include "bits/Equipe.h"
+#include "bits/Joueur.h"
 
 int main() {
     // Create the main window and the renderer
     gf::Window window("Futsal", { 1024, 768 });
-
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);    
-    
     gf::RenderWindow renderer(window);
     
+
+
     /*(ref 2. update)*/
     gf::Clock clock;
     renderer.clear(gf::Color::Black); //nettoyer l'écran avant de commencer
     gf::Vector2f mousePosition;
 
-
     gf::ResourceManager resources;
-    resources.addSearchDir("data/groundTarmac.png");
+    resources.addSearchDir("/home/pierre/Documents/L3/projet/Football/data/groundTarmac.png");
     gf::TextureAtlas atlas("data/futsal_spritesheet.xml", resources);
+
+    Terrain terrain = Terrain(atlas);
 
 
     // Start the game loop 
@@ -46,6 +46,7 @@ int main() {
                     window.close();
                 break;
                 
+                #if 0
                 case gf::EventType::MouseMoved:
                     mousePosition = renderer.mapPixelToCoords(event.mouseCursor.coords);
                 break;
@@ -104,6 +105,7 @@ int main() {
                         break;
                     }
                 break;
+                #endif
 
                 default:
                 break;
@@ -120,6 +122,7 @@ int main() {
     // Draw the entities
     renderer.clear();
     renderer.display();
+    terrain.render(renderer);
     }
 
     return 0;
