@@ -5,7 +5,7 @@
 #include <gf/Color.h>
 
 namespace{
-    static constexpr float SPEED = 100.0f;
+    static constexpr float SPEED = 120.0f;
 }
 
 Joueur::Joueur(int poste, int style){
@@ -101,7 +101,7 @@ void Joueur::deplacement(gf::Event event){
     }    
 }
 void Joueur::render(gf::RenderTarget& target){
-    gf::CircleShape shape({30.0f});
+    gf::CircleShape shape({20.0f});
     shape.setPosition(position);
     shape.setColor(gf::Color::Blue);
     shape.setAnchor(gf::Anchor::Center);
