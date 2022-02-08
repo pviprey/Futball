@@ -23,6 +23,7 @@ class Terrain : public gf::Entity{
         const gf::Texture& texture;
 
         gf::RectF LineVertical,
+        LineVerticalDot,
         LineHorizontal,
         LineTop,
         LineRight,
@@ -39,10 +40,20 @@ class Terrain : public gf::Entity{
         CornerBottomRight,
         CornerBottomLeft,
 
+        Circle3dTopCross,
+        Circle3dTopRight,
+        Circle3dRight,
+        Circle3dBottomRight,
+        Circle3dBottomCross,
+        Circle3dBottomLeft,
+        Circle3dLeft,
+        Circle3dTopLeft,
+
         Ground;
 
         enum class Texture{
             LineVertical,
+            LineVerticalDot,
             LineHorizontal,
             LineTop,
             LineRight,
@@ -58,6 +69,15 @@ class Terrain : public gf::Entity{
             CornerTopRight,
             CornerBottomRight,
             CornerBottomLeft,
+
+            Circle3dTopCross,
+            Circle3dTopRight,
+            Circle3dRight,
+            Circle3dBottomRight,
+            Circle3dBottomCross,
+            Circle3dBottomLeft,
+            Circle3dLeft,
+            Circle3dTopLeft,
 
             Ground
         };

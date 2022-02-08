@@ -12,13 +12,13 @@ namespace{
         "|            '            !"
         "G            '            D"
         "|            '            !"
-        "|            X            !"
-        "#            '            #"
-        "#   .     (  .  )    .    #"
-        "#            '            #"
-        "|            x            !"
         "|            '            !"
-        "g            '            d"
+        "#           1X2           #"
+        "#   .       (.)       .   #"
+        "#           4x3           #"
+        "|            '            !"
+        "|            '            !"
+        "G            '            D"
         "|            '            !"
         "L____________y____________M"
     ;
@@ -29,28 +29,38 @@ namespace{
 }
 
 Terrain::Terrain(const gf::TextureAtlas& atlas):gf::Entity(1),
-  texture(atlas.getTexture()),
+    texture(atlas.getTexture()),
 
-  LineVertical(atlas.getTextureRect("Centerred_Vertical_Line.png")),
-  LineHorizontal(atlas.getTextureRect("Centerred_Horizontal_Line.png")),
-  LineTop(atlas.getTextureRect("Top_Line.png")),
-  LineRight(atlas.getTextureRect("Right_Line.png")),
-  LineBottom(atlas.getTextureRect("Bottom_Line.png")),
-  LineLeft(atlas.getTextureRect("Left_Line.png")),
+    LineVertical(atlas.getTextureRect("Centerred_Vertical_Line.png")),
+    LineVerticalDot(atlas.getTextureRect("Centerred_Vertical_Line_Dot.png")),
+    LineHorizontal(atlas.getTextureRect("Centerred_Horizontal_Line.png")),
+    LineTop(atlas.getTextureRect("Top_Line.png")),
+    LineRight(atlas.getTextureRect("Right_Line.png")),
+    LineBottom(atlas.getTextureRect("Bottom_Line.png")),
+    LineLeft(atlas.getTextureRect("Left_Line.png")),
 
-  TShapeTop(atlas.getTextureRect("Top_TShape.png")),
-  TShapeRight(atlas.getTextureRect("Right_TShape.png")),
-  TShapeBottom(atlas.getTextureRect("Bottom_TShape.png")),
-  TShapeLeft(atlas.getTextureRect("Left_TShape.png")),
+    TShapeTop(atlas.getTextureRect("Top_TShape.png")),
+    TShapeRight(atlas.getTextureRect("Right_TShape.png")),
+    TShapeBottom(atlas.getTextureRect("Bottom_TShape.png")),
+    TShapeLeft(atlas.getTextureRect("Left_TShape.png")),
 
-  CornerTopRight(atlas.getTextureRect("TopRight_Corner.png")),
-  CornerTopLeft(atlas.getTextureRect("TopLeft_Corner.png")),
-  CornerBottomRight(atlas.getTextureRect("BottomRight_Corner.png")),
-  CornerBottomLeft(atlas.getTextureRect("BottomLeft_Corner.png")),
+    CornerTopRight(atlas.getTextureRect("TopRight_Corner.png")),
+    CornerTopLeft(atlas.getTextureRect("TopLeft_Corner.png")),
+    CornerBottomRight(atlas.getTextureRect("BottomRight_Corner.png")),
+    CornerBottomLeft(atlas.getTextureRect("BottomLeft_Corner.png")),
 
-  Ground(atlas.getTextureRect("Ground.png")),
-  tiles(TERRAINSIZE)
-  {}
+    Circle3dTopCross(atlas.getTextureRect("Top_Circle3d_Middle_Line.png")),
+    Circle3dTopRight(atlas.getTextureRect("TopRight_Circle3d.png")),
+    Circle3dRight(atlas.getTextureRect("Right_Circle3d.png")),
+    Circle3dBottomRight(atlas.getTextureRect("BottomRight_Circle3d.png")),
+    Circle3dBottomCross(atlas.getTextureRect("Bottom_Circle3d_Middle_Line.png")),
+    Circle3dBottomLeft(atlas.getTextureRect("BottomLeft_Circle3d.png")),
+    Circle3dLeft(atlas.getTextureRect("Left_Circle3d.png")),
+    Circle3dTopLeft(atlas.getTextureRect("TopLeft_Circle3d.png")),
+
+    Ground(atlas.getTextureRect("Ground.png")),
+    tiles(TERRAINSIZE)
+    {}
 
 void Terrain::setData() {
 
@@ -58,10 +68,11 @@ void Terrain::setData() {
 
     for (auto coords : tiles.getPositionRange()) {
         switch (tb(coords)) {
-            case 'X':
-            case 'x':
             case GUILLEMET:
                 tiles(coords) = Texture::LineVertical;
+                break;
+            case '.':
+                tiles(coords) = Texture::LineVerticalDot;
                 break;
             case '-':
                 tiles(coords) = Texture::LineTop;
@@ -80,9 +91,16 @@ void Terrain::setData() {
             case 'Y':
                 tiles(coords) = Texture::TShapeTop;
                 break;
+            case 'D':
+                tiles(coords) = Texture::TShapeRight;
+                break;
             case 'y':
                 tiles(coords) = Texture::TShapeBottom;
                 break;
+            case 'G':
+                tiles(coords) = Texture::TShapeLeft;
+                break;
+
 
             case 'O':
                 tiles(coords) = Texture::CornerTopLeft;
@@ -96,6 +114,33 @@ void Terrain::setData() {
             case 'L':
                 tiles(coords) = Texture::CornerBottomLeft;
                 break;
+
+
+            case 'X':
+                tiles(coords) = Texture::Circle3dTopCross;
+                break;
+            case '2':
+                tiles(coords) = Texture::Circle3dTopRight;
+                break;
+            case ')':                
+                tiles(coords) = Texture::Circle3dRight;
+                break;
+            case '3':
+                tiles(coords) = Texture::Circle3dBottomRight;
+                break;
+            case 'x':
+                tiles(coords) = Texture::Circle3dBottomCross;
+                break;
+            case '4':
+                tiles(coords) = Texture::Circle3dBottomLeft;
+                break;
+            case '(':    
+                tiles(coords) = Texture::Circle3dLeft;
+                break;
+            case '1':    
+                tiles(coords) = Texture::Circle3dTopLeft;
+                break;
+
 
             case ' ':
             default:
@@ -113,7 +158,10 @@ void Terrain::render(gf::RenderTarget& target) {
 
             case Texture::LineVertical:
                 sprite.setTextureRect(LineVertical);
-                break;            
+                break; 
+            case Texture::LineVerticalDot:
+                sprite.setTextureRect(LineVerticalDot);
+                break;
             case Texture::LineHorizontal:
                 break;            
             case Texture::LineTop:
@@ -154,6 +202,32 @@ void Terrain::render(gf::RenderTarget& target) {
             case Texture::CornerBottomLeft:
                 sprite.setTextureRect(CornerBottomLeft);
                 break;  
+
+            case Texture::Circle3dTopCross:
+                sprite.setTextureRect(Circle3dTopCross);
+                break;
+            case Texture::Circle3dTopRight:
+                sprite.setTextureRect(Circle3dTopRight);
+                break;
+            case Texture::Circle3dRight:
+                sprite.setTextureRect(Circle3dRight);
+                break;
+            case Texture::Circle3dBottomRight:
+                sprite.setTextureRect(Circle3dBottomRight);
+                break;
+            case Texture::Circle3dBottomCross:
+                sprite.setTextureRect(Circle3dBottomCross);
+                break;
+            case Texture::Circle3dBottomLeft:
+                sprite.setTextureRect(Circle3dBottomLeft);
+                break;
+            case Texture::Circle3dLeft:
+                sprite.setTextureRect(Circle3dLeft);
+                break;
+            case Texture::Circle3dTopLeft:
+                sprite.setTextureRect(Circle3dTopLeft);
+                break;
+
             case Texture::Ground:
                 sprite.setTextureRect(Ground);
                 break;  

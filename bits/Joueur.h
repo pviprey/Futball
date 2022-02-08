@@ -6,27 +6,24 @@
 #include <set>
 #include <gf/Entity.h>
 #include <gf/Vector.h>
+#include <gf/Event.h>
+#include <gf/Time.h>
 
 class Joueur : public gf::Entity{
     public:
         Joueur(int, int);
 
-        void deplacement();
+        void deplacement(gf::Event event);
+        void render(gf::RenderTarget& target);
+        void update(gf::Time time);
     private:
         int poste;  //0: gardien, 1: defenseur, 2: attaquant
         int style;  //0: reculé, 1: normal, 2:avancé
 
         gf::Vector2f velocite;
-        bool courir;
-
         gf::Vector2f position;
-};
 
-inline Joueur::Joueur(int poste, int style):
-    poste(poste),
-    style(style),
-    velocite(0,0),
-    courir(false)
-    {}
+        bool current;
+};
 
 #endif  //JOUEUR_H

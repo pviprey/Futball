@@ -8,6 +8,7 @@
 #include <gf/ResourceManager.h>
 #include <gf/ViewContainer.h>
 #include <gf/Views.h>
+#include <gf/Time.h>
 
 #include "Game.h"
 #include "bits/Terrain.h"
@@ -41,6 +42,7 @@ int main() {
     Terrain terrain = Terrain(atlas);
     terrain.setData();
 
+    Joueur j1 = Joueur(0, 1);
 
     // Start the game loop 
     while (window.isOpen()){
@@ -49,6 +51,9 @@ int main() {
 
         // 1. recevoir les actions du joueur
         while (window.pollEvent(event)){   //reception action sur clavier
+
+            j1.deplacement(event);
+
             switch (event.type){
                 case gf::EventType::Closed: //fermeture de la fenetre
                     window.close();
@@ -60,59 +65,8 @@ int main() {
                 
                 case gf::EventType::KeyPressed:     //touche appuyé
                     switch (event.key.keycode){
-                        case gf::Keycode::Up:       //monter
-                        case gf::Keycode::Z:
-                            // velocity.y-= Speed;
-                        break;
-
-                        case gf::Keycode::Down:     //descendre
-                        case gf::Keycode::S:
-                            // velocity.y+= Speed;
-                        break;
-
-                        case gf::Keycode::Left:     //gauche
-                        case gf::Keycode::Q:
-                            // velocity.x-= Speed;
-                        break;
-
-                        case gf::Keycode::Right:    //droite
-                        case gf::Keycode::D:
-                            // velocity.x+= Speed;
-                        break;
-
                         case gf::Keycode::Escape:
                             window.close();
-                        break;
-
-                        default:
-                        break;
-                    }
-                break;
-
-
-                case gf::EventType::KeyReleased:     //touche relaché
-                    switch (event.key.keycode){
-                        case gf::Keycode::Up:       //monter
-                        case gf::Keycode::Z:
-                            // velocity.y+= Speed;
-                        break;
-
-                        case gf::Keycode::Down:     //descendre
-                        case gf::Keycode::S:
-                            // velocity.y-= Speed;
-                        break;
-
-                        case gf::Keycode::Left:     //gauche
-                        case gf::Keycode::Q:
-                            // velocity.x+= Speed;
-                        break;
-
-                        case gf::Keycode::Right:    //droite
-                        case gf::Keycode::D:
-                            // velocity.x-= Speed;
-                        break;
-
-                        default:
                         break;
                     }
                 break;
@@ -125,16 +79,20 @@ int main() {
         }
 
     // 2. update 60 fois MINIMUM
-    float ips = clock.restart().asSeconds();
-    std::printf("%g\n", 1/ips);
+    gf::Time ips = clock.restart();
+    std::printf("%g\n", 1/ips.asSeconds());
     //entity.setVelocity(velocity);
     //entity.update(ips);
+    j1.update(ips);
 
 
     // Draw the entities
     renderer.setView(view);
     renderer.clear();
+
     terrain.render(renderer);
+    j1.render(renderer);
+
     renderer.display();
     }
 
