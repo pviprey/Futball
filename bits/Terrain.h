@@ -12,6 +12,9 @@
 
 #include "Data.h"
 
+#define GROUND_HEIGH 13
+#define GROUND_LENGTH 27
+
 class Terrain : public gf::Entity{
     public:
         Terrain(const gf::TextureAtlas& atlas);
