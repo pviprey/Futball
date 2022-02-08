@@ -25,7 +25,7 @@ int main() {
 
     gf::ViewContainer views;
 
-    gf::ExtendView view(gf::vec(27, 13) * 32.0f, gf::vec(27, 13) * 70.0f);
+    gf::ExtendView view(gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 32.0f, gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 70.0f);
     views.addView(view);
     view.setInitialFramebufferSize({ 1024, 768 });
 

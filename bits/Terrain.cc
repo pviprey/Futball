@@ -23,7 +23,7 @@ namespace{
         "L____________y____________M"
     ;
 
-    constexpr gf::Vector2i TERRAINSIZE = gf::vec(27, 13);
+    constexpr gf::Vector2i TERRAINSIZE = gf::vec(GROUND_LENGTH, GROUND_HEIGH);
     constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);  
   
 }
@@ -75,15 +75,12 @@ void Terrain::setData() {
             case '|':
                 tiles(coords) = Texture::LineLeft;
                 break;
-
-
             case 'Y':
                 tiles(coords) = Texture::TShapeTop;
                 break;
             case 'y':
                 tiles(coords) = Texture::TShapeBottom;
                 break;
-
             case 'O':
                 tiles(coords) = Texture::CornerTopLeft;
                 break;
@@ -96,7 +93,6 @@ void Terrain::setData() {
             case 'L':
                 tiles(coords) = Texture::CornerBottomLeft;
                 break;
-
             case ' ':
             default:
                 tiles(coords) = Texture::Ground;
