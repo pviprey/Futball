@@ -3,12 +3,15 @@
 #include <gf/RenderWindow.h>
 #include <gf/Shapes.h>
 #include <gf/Color.h>
+#include <gf/Sprite.h>
 
 namespace{
     static constexpr float SPEED = 120.0f;
 }
 
-Joueur::Joueur(int poste, int style){
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):
+    texture(resources.getTexture("Players/characterBlue (1).png"))
+    {
     this->poste = poste;
     this->style = style;
     this->velocite = {0,0};
@@ -101,12 +104,13 @@ void Joueur::deplacement(gf::Event event){
     }    
 }
 void Joueur::render(gf::RenderTarget& target){
-    gf::CircleShape shape({20.0f});
+    gf::Sprite shape;
+    shape.setTexture(texture);
+    shape.setScale(1.2);
     shape.setPosition(position);
-    shape.setColor(gf::Color::Blue);
     shape.setAnchor(gf::Anchor::Center);
     target.draw(shape);
-}
+}   
 
 void Joueur::update(gf::Time time){
     position += velocite * time.asSeconds();
