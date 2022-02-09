@@ -39,10 +39,10 @@ int main() {
     resources.addSearchDir("data");
     gf::TextureAtlas atlas("futsal_spritesheet.xml", resources);
 
-    Terrain terrain = Terrain(atlas);
+    Terrain terrain = Terrain(atlas, resources);
     terrain.setData();
 
-    Joueur j1 = Joueur(0, 1);
+    Joueur j1 = Joueur(0, 1, resources);
 
     // Start the game loop 
     while (window.isOpen()){
@@ -67,6 +67,9 @@ int main() {
                     switch (event.key.keycode){
                         case gf::Keycode::Escape:
                             window.close();
+                        break;
+
+                        default:
                         break;
                     }
                 break;

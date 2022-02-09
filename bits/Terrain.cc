@@ -1,6 +1,7 @@
 #include <gf/Sprite.h>
 
 #include <gf/Color.h>
+#include <gf/AssetManager.h>
 
 #include "Terrain.h"
 
@@ -8,27 +9,25 @@
 
 namespace{
     const char TERRAIN[] =
-        "O------------Y------------P"
-        "|            '            !"
-        "G            '            D"
-        "|            '            !"
-        "|            '            !"
-        "#           1X2           #"
-        "#   .       (.)       .   #"
-        "#           4x3           #"
-        "|            '            !"
-        "|            '            !"
-        "G            '            D"
-        "|            '            !"
-        "L____________y____________M"
+        " O------------Y------------P "
+        " |            '            ! "
+        " G            '            D "
+        " |            '            ! "
+        " |            '            ! "
+        "W|           1A2           !X"
+        "#|   .       (.)       .   !="
+        "V|           4a3           !C"
+        " |            '            ! "
+        " |            '            ! "
+        " G            '            D "
+        " |            '            ! "
+        " L____________y____________M "
     ;
-
     constexpr gf::Vector2i TERRAINSIZE = gf::vec(GROUND_LENGTH, GROUND_HEIGH);
-    constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);  
-  
+    constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);
 }
 
-Terrain::Terrain(const gf::TextureAtlas& atlas):gf::Entity(1),
+Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):gf::Entity(1),
     texture(atlas.getTexture()),
 
     LineVertical(atlas.getTextureRect("Centerred_Vertical_Line.png")),
@@ -59,6 +58,14 @@ Terrain::Terrain(const gf::TextureAtlas& atlas):gf::Entity(1),
     Circle3dTopLeft(atlas.getTextureRect("TopLeft_Circle3d.png")),
 
     Ground(atlas.getTextureRect("Ground.png")),
+
+    NetTopLeft(resources.getTexture("Elements/TopLeft_Net.png")),
+    NetLeft(resources.getTexture("Elements/Left_Net.png")),
+    NetBottomLeft(resources.getTexture("Elements/BottomLeft_Net.png")),
+    NetTopRight(resources.getTexture("Elements/TopRight_Net.png")),
+    NetRight(resources.getTexture("Elements/Right_Net.png")),
+    NetBottomRight(resources.getTexture("Elements/BottomRight_Net.png")),
+    
     tiles(TERRAINSIZE)
     {}
 
@@ -114,7 +121,7 @@ void Terrain::setData() {
                 break;
 
 
-            case 'X':
+            case 'A':
                 tiles(coords) = Texture::Circle3dTopCross;
                 break;
             case '2':
@@ -126,7 +133,7 @@ void Terrain::setData() {
             case '3':
                 tiles(coords) = Texture::Circle3dBottomRight;
                 break;
-            case 'x':
+            case 'a':
                 tiles(coords) = Texture::Circle3dBottomCross;
                 break;
             case '4':
@@ -140,6 +147,26 @@ void Terrain::setData() {
                 break;
 
 
+            case 'W':
+                tiles(coords) = Texture::NetBottomRight;
+                break;
+            case 'X':
+                tiles(coords) = Texture::NetBottomLeft;
+                break;
+            case '=':
+                tiles(coords) = Texture::NetLeft;
+                break;
+            case 'C':
+                tiles(coords) = Texture::NetTopLeft;
+                break;
+            case 'V':
+                tiles(coords) = Texture::NetTopRight;
+                break;
+            case '#':
+                tiles(coords) = Texture::NetRight;
+                break;                                                                
+
+
             case ' ':
             default:
                 tiles(coords) = Texture::Ground;
@@ -149,6 +176,15 @@ void Terrain::setData() {
 }
 
 void Terrain::render(gf::RenderTarget& target) {
+    for(auto coords : tiles.getPositionRange()) {
+        gf::Sprite sprite(texture);
+        sprite.setTextureRect(Ground);
+        sprite.setPosition(coords * SpriteSize);
+        sprite.setAnchor(gf::Anchor::TopLeft);
+        target.draw(sprite);
+    }
+
+
     for (auto coords : tiles.getPositionRange()) {
         gf::Sprite sprite(texture);
 
@@ -175,6 +211,7 @@ void Terrain::render(gf::RenderTarget& target) {
                 sprite.setTextureRect(LineLeft);
                 break;            
 
+
             case Texture::TShapeTop:
                 sprite.setTextureRect(TShapeTop);
                 break;
@@ -188,6 +225,7 @@ void Terrain::render(gf::RenderTarget& target) {
                 sprite.setTextureRect(TShapeLeft);
                 break;
 
+
             case Texture::CornerTopLeft:
                 sprite.setTextureRect(CornerTopLeft);
                 break;              
@@ -200,6 +238,7 @@ void Terrain::render(gf::RenderTarget& target) {
             case Texture::CornerBottomLeft:
                 sprite.setTextureRect(CornerBottomLeft);
                 break;  
+
 
             case Texture::Circle3dTopCross:
                 sprite.setTextureRect(Circle3dTopCross);
@@ -225,6 +264,27 @@ void Terrain::render(gf::RenderTarget& target) {
             case Texture::Circle3dTopLeft:
                 sprite.setTextureRect(Circle3dTopLeft);
                 break;
+
+
+            case Texture::NetBottomRight:
+                sprite.setTexture(NetBottomRight);
+                break;
+            case Texture::NetBottomLeft:
+                sprite.setTexture(NetBottomLeft);
+                break;
+            case Texture::NetLeft:
+                sprite.setTexture(NetLeft);
+                break;
+            case Texture::NetTopLeft:
+                sprite.setTexture(NetTopLeft);
+                break;
+            case Texture::NetTopRight:
+                sprite.setTexture(NetTopRight);
+                break;
+            case Texture::NetRight:
+                sprite.setTexture(NetRight);
+                break;
+
 
             case Texture::Ground:
                 sprite.setTextureRect(Ground);

@@ -9,15 +9,16 @@
 #include <gf/TextureAtlas.h>
 #include <gf/Array2D.h>
 #include <gf/RenderTarget.h>
+#include <gf/ResourceManager.h>
 
 #include "Data.h"
 
 #define GROUND_HEIGH 13
-#define GROUND_LENGTH 27
+#define GROUND_LENGTH 29
 
 class Terrain : public gf::Entity{
     public:
-        Terrain(const gf::TextureAtlas& atlas);
+        Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources);
 
         void setData();
         void render(gf::RenderTarget& target);        
@@ -54,6 +55,20 @@ class Terrain : public gf::Entity{
 
         Ground;
 
+        const gf::Texture& NetTopLeft;
+        const gf::Texture& NetLeft;
+        const gf::Texture& NetBottomLeft;
+        const gf::Texture& NetTopRight;
+        const gf::Texture& NetRight;
+        const gf::Texture& NetBottomRight;
+
+        // const gf::Texture& NetTopLeft,
+        // NetLeft,
+        // NetBottomLeft,
+        // NetTopRight,
+        // NetRight,
+        // NetBottomRight;
+
         enum class Texture{
             LineVertical,
             LineVerticalDot,
@@ -81,6 +96,13 @@ class Terrain : public gf::Entity{
             Circle3dBottomLeft,
             Circle3dLeft,
             Circle3dTopLeft,
+
+            NetTopLeft,
+            NetLeft,
+            NetBottomLeft,
+            NetTopRight,
+            NetRight,
+            NetBottomRight,
 
             Ground
         };
