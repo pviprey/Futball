@@ -13,16 +13,39 @@
 
 class Joueur : public gf::Entity{
     public:
-        Joueur(int, int, gf::ResourceManager& resources);
+        Joueur(int poste, int style, gf::ResourceManager& resources);
+
+        void setPosition(gf::Vector2f);
+        void setPosition(float posX, float posY);
+        void setPositionY(float posY);
+
+        bool getCurrent();
+        void setCurrent();
+        void removeCurrent();
+        void switchCurrent(Joueur& Joueur);
+
+        enum class Poste{
+            Gardien,
+            Defenseur,
+            Attaquant
+        };
+        Poste getPoste() const;
 
         void deplacement(gf::Event event);
         void render(gf::RenderTarget& target);
         void update(gf::Time time);
     private:
+
         const gf::Texture& texture;
 
-        int poste;  //0: gardien, 1: defenseur, 2: attaquant
-        int style;  //0: reculé, 1: normal, 2:avancé
+        enum class Style{
+            Recule,
+            Normal,
+            Avance
+        };
+
+        Poste poste;  //0: gardien, 1: defenseur, 2: attaquant
+        Style style;  //0: reculé, 1: normal, 2:avancé
 
         gf::Vector2f velocite;
         gf::Vector2f position;

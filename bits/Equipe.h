@@ -4,19 +4,31 @@
 #include <cstddef>
 #include <iosfwd>
 #include <set>
-#include <array>
+#include <vector>
+
+#include <gf/Event.h>
+#include <gf/RenderTarget.h>
+#include <gf/Time.h>
+
 #include "Joueur.h"
 
 class Equipe{
     public:
-        Equipe(std::array<Joueur, 5>);
+        Equipe();
+        Equipe(std::vector<Joueur> equipe);
+
+        bool addJoueur(const Joueur& joueur);
+        bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
+
+        void deplacement(gf::Event event);
+        void render(gf::RenderTarget& target);
+        void update(gf::Time time);        
     private:
-        std::array<Joueur, 5> composition;
+        std::vector<Joueur> composition;
+
+        bool hasGoal();
+
+        void disposition();
 };
-
-inline Equipe::Equipe(std::array<Joueur, 5> composition):
-    composition(composition)
-    {}
-
 
 #endif  //EQUIPE_H

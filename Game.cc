@@ -42,7 +42,13 @@ int main() {
     Terrain terrain = Terrain(atlas, resources);
     terrain.setData();
 
-    Joueur j1 = Joueur(0, 1, resources);
+    Equipe equipe1 = Equipe();
+
+    equipe1.addJoueur(Joueur(0, 1, resources));
+    equipe1.addJoueur(Joueur(1, 1, resources));
+    equipe1.addJoueur(Joueur(1, 1, resources));
+    equipe1.addJoueur(Joueur(1, 1, resources));
+    equipe1.addJoueur(Joueur(2, 1, resources));
 
     // Start the game loop 
     while (window.isOpen()){
@@ -52,7 +58,7 @@ int main() {
         // 1. recevoir les actions du joueur
         while (window.pollEvent(event)){   //reception action sur clavier
 
-            j1.deplacement(event);
+            equipe1.deplacement(event);
 
             switch (event.type){
                 case gf::EventType::Closed: //fermeture de la fenetre
@@ -83,10 +89,8 @@ int main() {
 
     // 2. update 60 fois MINIMUM
     gf::Time ips = clock.restart();
-    std::printf("%g\n", 1/ips.asSeconds());
-    //entity.setVelocity(velocity);
-    //entity.update(ips);
-    j1.update(ips);
+    //std::printf("%g\n", 1/ips.asSeconds());
+    equipe1.update(ips);
 
 
     // Draw the entities
@@ -94,7 +98,7 @@ int main() {
     renderer.clear();
 
     terrain.render(renderer);
-    j1.render(renderer);
+    equipe1.render(renderer);
 
     renderer.display();
     }

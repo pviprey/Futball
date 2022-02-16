@@ -62,13 +62,6 @@ class Terrain : public gf::Entity{
         const gf::Texture& NetRight;
         const gf::Texture& NetBottomRight;
 
-        // const gf::Texture& NetTopLeft,
-        // NetLeft,
-        // NetBottomLeft,
-        // NetTopRight,
-        // NetRight,
-        // NetBottomRight;
-
         enum class Texture{
             LineVertical,
             LineVerticalDot,
