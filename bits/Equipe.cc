@@ -44,7 +44,7 @@ void Equipe::deplacement(gf::Event event){
                     switch (event.key.keycode){
                         case gf::Keycode::Space:
                         case gf::Keycode::RightCtrl:
-                            joueur.switchCurrent(composition.at(rand() % TAILLE_EQUIPE));
+                            joueur.switchCurrent(composition.at(rand() % TAILLE_EQUIPE)); //TODO with ballon
                         break;
 
                         default:
@@ -59,15 +59,15 @@ void Equipe::deplacement(gf::Event event){
     }
 }
 
-void Equipe::render(gf::RenderTarget& target){
-    for(auto & joueur : composition){
-        joueur.render(target);
-    }
-}
-
 void Equipe::update(gf::Time time){
     for(auto & joueur : composition){
         joueur.update(time);
+    }
+}
+
+void Equipe::render(gf::RenderTarget& target){
+    for(auto & joueur : composition){
+        joueur.render(target);
     }
 }
 

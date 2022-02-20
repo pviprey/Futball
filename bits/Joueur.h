@@ -32,8 +32,8 @@ class Joueur : public gf::Entity{
         Poste getPoste() const;
 
         void deplacement(gf::Event event);
-        void render(gf::RenderTarget& target);
         void update(gf::Time time);
+        void render(gf::RenderTarget& target);
     private:
 
         const gf::Texture& texture;

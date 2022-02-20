@@ -71,6 +71,7 @@ void Joueur::removeCurrent(){
 }
 
 void Joueur::switchCurrent(Joueur& joueur){
+    this->velocite = {0.0f, 0.0f};
     this->removeCurrent();
     joueur.setCurrent();
 }
@@ -88,22 +89,22 @@ void Joueur::deplacement(gf::Event event){
                 switch (event.key.keycode){
                     case gf::Keycode::Up:       //monter
                     case gf::Keycode::Z:
-                        velocite.y-= SPEED;
+                        velocite.y-= 1;
                     break;
 
                     case gf::Keycode::Down:     //descendre
                     case gf::Keycode::S:
-                        velocite.y+= SPEED;
+                        velocite.y+= 1;
                     break;
 
                     case gf::Keycode::Left:     //gauche
                     case gf::Keycode::Q:
-                        velocite.x-= SPEED;
+                        velocite.x-= 1;
                     break;
 
                     case gf::Keycode::Right:    //droite
                     case gf::Keycode::D:
-                        velocite.x+= SPEED;
+                        velocite.x+= 1;
                     break;
 
                     default:
@@ -116,22 +117,22 @@ void Joueur::deplacement(gf::Event event){
                 switch (event.key.keycode){
                     case gf::Keycode::Up:       //monter
                     case gf::Keycode::Z:
-                        velocite.y+= SPEED;
+                        velocite.y = 0;
                     break;
 
                     case gf::Keycode::Down:     //descendre
                     case gf::Keycode::S:
-                        velocite.y-= SPEED;
+                        velocite.y = 0;
                     break;
 
                     case gf::Keycode::Left:     //gauche
                     case gf::Keycode::Q:
-                        velocite.x+= SPEED;
+                        velocite.x = 0;
                     break;
 
                     case gf::Keycode::Right:    //droite
                     case gf::Keycode::D:
-                        velocite.x-= SPEED;
+                        velocite.x = 0;
                     break;
 
                     default:
@@ -144,12 +145,24 @@ void Joueur::deplacement(gf::Event event){
         }
     }
 }
+
+void Joueur::update(gf::Time time){
+    if(velocite.x != 0 || velocite.y != 0){
+        float absolue = sqrt(pow(velocite.x, 2) + pow(velocite.y, 2));
+        velocite = {velocite.x/absolue, velocite.y/absolue};
+        printf("%f, %f\n", velocite.x, velocite.y);
+    }
+    position += velocite * time.asSeconds() * SPEED;
+}
+
 void Joueur::render(gf::RenderTarget& target){
     gf::Sprite shape;
     shape.setTexture(texture);
     shape.setScale(1.2);
     shape.setPosition(position);
     shape.setAnchor(gf::Anchor::Center);
+    shape.setRotation(atan2(velocite.y, velocite.x));
+
     target.draw(shape);
 
     if(this->current){
@@ -162,8 +175,4 @@ void Joueur::render(gf::RenderTarget& target){
         circleShape.setAnchor(gf::Anchor::Center);
         target.draw(circleShape);
     }
-}   
-
-void Joueur::update(gf::Time time){
-    position += velocite * time.asSeconds();
 }

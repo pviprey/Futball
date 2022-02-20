@@ -21,8 +21,8 @@ class Equipe{
         bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
         void deplacement(gf::Event event);
+        void update(gf::Time time);
         void render(gf::RenderTarget& target);
-        void update(gf::Time time);        
     private:
         std::vector<Joueur> composition;
 
