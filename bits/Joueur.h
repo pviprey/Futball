@@ -10,6 +10,9 @@
 #include <gf/Time.h>
 #include <gf/ResourceManager.h>
 
+namespace{
+    static constexpr float SPEED = 120.0f;
+}
 
 class Joueur : public gf::Entity{
     public:

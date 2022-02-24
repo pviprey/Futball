@@ -39,8 +39,10 @@ int main() {
     resources.addSearchDir("data");
     gf::TextureAtlas atlas("futsal_spritesheet.xml", resources);
 
-    Terrain terrain = Terrain(atlas, resources);
+    Terrain terrain(atlas, resources);
     terrain.setData();
+
+    Ballon ballon(resources);
 
     Equipe equipe1 = Equipe();
 
@@ -98,6 +100,7 @@ int main() {
     renderer.clear();
 
     terrain.render(renderer);
+    ballon.render(renderer);
     equipe1.render(renderer);
 
     renderer.display();

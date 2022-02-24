@@ -4,18 +4,23 @@
 #include <cstddef>
 #include <iosfwd>
 #include <set>
+#include <gf/ResourceManager.h>
 #include <gf/Entity.h>
 #include <gf/Vector.h>
 
 class Ballon : public gf::Entity{
     public:
-        Ballon();
+        Ballon(gf::ResourceManager& resources);
+
+        void update(gf::Time time);
+        void render(gf::RenderTarget& target);        
     private:
-        int size;
+        const gf::Texture& texture;
 
         gf::Vector2f position;
-};
+        gf::Vector2f velocite;
 
-inline Ballon::Ballon():size(62){}
+        bool pushed;
+};
 
 #endif  //BALLON_H

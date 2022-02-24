@@ -6,7 +6,7 @@
 #include <gf/Sprite.h>
 
 namespace{
-    static constexpr float SPEED = 120.0f;
+    //static constexpr float SPEED = 120.0f;
 }
 
 Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(resources.getTexture("Players/characterBlue (1).png")){
