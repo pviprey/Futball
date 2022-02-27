@@ -40,6 +40,10 @@ Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(res
     }
 
     this->velocite = {0,0};
+
+    this->hitboxe.center = position;
+    this->hitboxe.radius = 11.0f;
+
     this->current = false;
 }
 
@@ -153,12 +157,13 @@ void Joueur::update(gf::Time time){
         printf("%f, %f\n", velocite.x, velocite.y);
     }
     position += velocite * time.asSeconds() * SPEED;
+    hitboxe.center = position;
 }
 
 void Joueur::render(gf::RenderTarget& target){
     gf::Sprite shape;
     shape.setTexture(texture);
-    shape.setScale(1.2);
+    shape.setScale(1.3);
     shape.setPosition(position);
     shape.setAnchor(gf::Anchor::Center);
     shape.setRotation(atan2(velocite.y, velocite.x));
@@ -175,4 +180,13 @@ void Joueur::render(gf::RenderTarget& target){
         circleShape.setAnchor(gf::Anchor::Center);
         target.draw(circleShape);
     }
+
+    //debug
+    gf::CircleShape hitboxeShape;
+    hitboxeShape.setRadius(hitboxe.getRadius());
+    hitboxeShape.setPosition(hitboxe.getCenter());
+    hitboxeShape.setColor(gf::Color::Transparent);
+    hitboxeShape.setOutlineColor(gf::Color::Blue);
+    hitboxeShape.setOutlineThickness(1.0f);
+    target.draw(hitboxeShape);    
 }

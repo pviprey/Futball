@@ -18,7 +18,7 @@
 
 int main() {
     // Create the main window and the renderer
-    gf::Window window("Futsal", { 1024, 768 });
+    gf::Window window("Futsall", { 1024, 768 });
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);    
     gf::RenderWindow renderer(window);
@@ -107,5 +107,4 @@ int main() {
     }
 
     return 0;
-    // VIENS A LA MAISON Y A LE PRINTEMPS, QUI CHANTEUH
 }

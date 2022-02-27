@@ -7,6 +7,7 @@
 #include <gf/ResourceManager.h>
 #include <gf/Entity.h>
 #include <gf/Vector.h>
+#include <gf/Circ.h>
 
 class Ballon : public gf::Entity{
     public:
@@ -19,6 +20,8 @@ class Ballon : public gf::Entity{
 
         gf::Vector2f position;
         gf::Vector2f velocite;
+
+        gf::CircF hitboxe;
 
         bool pushed;
 };

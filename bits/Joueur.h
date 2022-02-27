@@ -9,9 +9,10 @@
 #include <gf/Event.h>
 #include <gf/Time.h>
 #include <gf/ResourceManager.h>
+#include <gf/Circ.h>
 
 namespace{
-    static constexpr float SPEED = 120.0f;
+    static constexpr float SPEED = 160.0f;
 }
 
 class Joueur : public gf::Entity{
@@ -52,6 +53,8 @@ class Joueur : public gf::Entity{
 
         gf::Vector2f velocite;
         gf::Vector2f position;
+
+        gf::CircF hitboxe;
 
         bool current;
 };
