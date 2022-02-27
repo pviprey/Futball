@@ -8,9 +8,13 @@
 Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Ball/ball_soccer4.png")){
     this->position = {0, 0};
     this->velocite = {0, 0};
-    this->hitboxe.center = position;
-    this->hitboxe.radius = 8.0f;
+    this->hitbox.center = position;
+    this->hitbox.radius = 8.0f;
     this->pushed = false;
+}
+
+gf::CircF Ballon::getHitbox() const {
+    return hitbox;
 }
 
 void Ballon::update(gf::Time time){
@@ -27,11 +31,11 @@ void Ballon::render(gf::RenderTarget& target){
     target.draw(shape);
 
     //debug
-    gf::CircleShape hitboxeShape;
-    hitboxeShape.setRadius(hitboxe.getRadius());
-    hitboxeShape.setPosition(hitboxe.getCenter());
-    hitboxeShape.setColor(gf::Color::Transparent);
-    hitboxeShape.setOutlineColor(gf::Color::Blue);
-    hitboxeShape.setOutlineThickness(1.0f);
-    target.draw(hitboxeShape);    
+    gf::CircleShape hitboxShape;
+    hitboxShape.setRadius(hitbox.getRadius());
+    hitboxShape.setPosition(hitbox.getCenter());
+    hitboxShape.setColor(gf::Color::Transparent);
+    hitboxShape.setOutlineColor(gf::Color::Blue);
+    hitboxShape.setOutlineThickness(1.0f);
+    target.draw(hitboxShape);    
 }

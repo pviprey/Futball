@@ -41,8 +41,8 @@ Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(res
 
     this->velocite = {0,0};
 
-    this->hitboxe.center = position;
-    this->hitboxe.radius = 11.0f;
+    this->hitbox.center = position;
+    this->hitbox.radius = 11.0f;
 
     this->current = false;
 }
@@ -85,6 +85,9 @@ Joueur::Poste Joueur::getPoste() const {
     return poste;
 }
 
+gf::CircF Joueur::getHitbox() const {
+    return hitbox;
+}
 
 void Joueur::deplacement(gf::Event event){
     if(current){
@@ -157,7 +160,7 @@ void Joueur::update(gf::Time time){
         printf("%f, %f\n", velocite.x, velocite.y);
     }
     position += velocite * time.asSeconds() * SPEED;
-    hitboxe.center = position;
+    hitbox.center = position;
 }
 
 void Joueur::render(gf::RenderTarget& target){
@@ -182,11 +185,11 @@ void Joueur::render(gf::RenderTarget& target){
     }
 
     //debug
-    gf::CircleShape hitboxeShape;
-    hitboxeShape.setRadius(hitboxe.getRadius());
-    hitboxeShape.setPosition(hitboxe.getCenter());
-    hitboxeShape.setColor(gf::Color::Transparent);
-    hitboxeShape.setOutlineColor(gf::Color::Blue);
-    hitboxeShape.setOutlineThickness(1.0f);
-    target.draw(hitboxeShape);    
+    gf::CircleShape hitboxShape;
+    hitboxShape.setRadius(hitbox.getRadius());
+    hitboxShape.setPosition(hitbox.getCenter());
+    hitboxShape.setColor(gf::Color::Transparent);
+    hitboxShape.setOutlineColor(gf::Color::Blue);
+    hitboxShape.setOutlineThickness(1.0f);
+    target.draw(hitboxShape);    
 }

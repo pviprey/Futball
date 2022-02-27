@@ -13,6 +13,8 @@ class Ballon : public gf::Entity{
     public:
         Ballon(gf::ResourceManager& resources);
 
+        gf::CircF getHitbox() const;
+
         void update(gf::Time time);
         void render(gf::RenderTarget& target);        
     private:
@@ -21,7 +23,7 @@ class Ballon : public gf::Entity{
         gf::Vector2f position;
         gf::Vector2f velocite;
 
-        gf::CircF hitboxe;
+        gf::CircF hitbox;
 
         bool pushed;
 };

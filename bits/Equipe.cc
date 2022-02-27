@@ -36,6 +36,10 @@ bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources){
     return addJoueur(Joueur(poste, style, resources));
 }
 
+std::vector<Joueur> Equipe::getJoueurs() const {
+    return composition;
+}
+
 void Equipe::deplacement(gf::Event event){
     for (auto & joueur : composition){
         if(joueur.getCurrent()){

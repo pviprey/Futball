@@ -20,6 +20,8 @@ class Equipe{
         bool addJoueur(const Joueur& joueur);
         bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
+        std::vector<Joueur> getJoueurs() const;
+
         void deplacement(gf::Event event);
         void update(gf::Time time);
         void render(gf::RenderTarget& target);

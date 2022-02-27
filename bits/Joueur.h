@@ -35,6 +35,8 @@ class Joueur : public gf::Entity{
         };
         Poste getPoste() const;
 
+        gf::CircF getHitbox() const;
+
         void deplacement(gf::Event event);
         void update(gf::Time time);
         void render(gf::RenderTarget& target);
@@ -54,7 +56,7 @@ class Joueur : public gf::Entity{
         gf::Vector2f velocite;
         gf::Vector2f position;
 
-        gf::CircF hitboxe;
+        gf::CircF hitbox;
 
         bool current;
 };
