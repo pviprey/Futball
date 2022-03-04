@@ -4,53 +4,54 @@
 #include <gf/Shapes.h>
 #include <gf/Color.h>
 #include <gf/Sprite.h>
+#include <gf/VectorOps.h>
+#include <gf/Log.h>
 
 namespace{
     //static constexpr float SPEED = 120.0f;
 }
 
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(resources.getTexture("Players/characterBlue (1).png")){
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(&resources.getTexture("Players/characterBlue (1).png")){
     switch(poste){
         case 0:
             this->poste = Poste::Gardien;
-            position.x = 70;
+            hitbox.center.x = 13 * -64;
             break;
         case 1:
             this->poste = Poste::Defenseur;
-            position.x = 400;
+            hitbox.center.x = 9 * -64;
             break;
         case 2:
             this->poste = Poste::Attaquant;
-            position.x = 800;
+            hitbox.center.x = 3 * -64;
             break;
     }
 
     switch(style){
         case 0:
             this->style = Style::Recule;
-            position.x -= position.x*0.1;
+            hitbox.center.x -= hitbox.center.x*0.1;
             break;
         case 1:
             this->style = Style::Normal;
             break;
         case 2:
             this->style = Style::Avance;
-            position.x += position.x*0.1;
+            hitbox.center.x += hitbox.center.x*0.1;
             break;
     }
 
     this->velocite = {0,0};
 
-    this->hitbox.center = position;
     this->hitbox.radius = 11.0f;
 
     this->current = false;
+    this->interacting = false;
 }
 
 
 void Joueur::setPosition(gf::Vector2f position){
-    this->position = position;
-    printf("(%f, %f)\n", position.x, position.y);
+    this->hitbox.center = position;
 }
 
 void Joueur::setPosition(float posX, float posY){
@@ -58,7 +59,7 @@ void Joueur::setPosition(float posX, float posY){
 }
 
 void Joueur::setPositionY(float posY){
-    setPosition({this->position.x, posY});
+    setPosition({this->hitbox.center.x, posY});
 }
 
 
@@ -96,22 +97,22 @@ void Joueur::deplacement(gf::Event event){
                 switch (event.key.keycode){
                     case gf::Keycode::Up:       //monter
                     case gf::Keycode::Z:
-                        velocite.y-= 1;
+                        velocite.y = -1;
                     break;
 
                     case gf::Keycode::Down:     //descendre
                     case gf::Keycode::S:
-                        velocite.y+= 1;
+                        velocite.y = 1;
                     break;
 
                     case gf::Keycode::Left:     //gauche
                     case gf::Keycode::Q:
-                        velocite.x-= 1;
+                        velocite.x = -1;
                     break;
 
                     case gf::Keycode::Right:    //droite
                     case gf::Keycode::D:
-                        velocite.x+= 1;
+                        velocite.x = 1;
                     break;
 
                     default:
@@ -155,21 +156,30 @@ void Joueur::deplacement(gf::Event event){
 
 void Joueur::update(gf::Time time){
     if(velocite.x != 0 || velocite.y != 0){
-        float absolue = sqrt(pow(velocite.x, 2) + pow(velocite.y, 2));
-        velocite = {velocite.x/absolue, velocite.y/absolue};
-        printf("%f, %f\n", velocite.x, velocite.y);
+        velocite = gf::normalize(velocite);
     }
-    position += velocite * time.asSeconds() * SPEED;
-    hitbox.center = position;
+
+    hitbox.center += velocite * time.asSeconds() * SPEED;
+}
+
+void Joueur::interact(gf::Penetration penetration){
+    hitbox.center -= penetration.depth * penetration.normal;
+    //velocite -= gf::dot(velocite, penetration.normal);
+    velocite *= gf::Vector2f{.2, .2};
+    printf("velocite : %f, %f\n", velocite.x, velocite.y);
+    printf("penetration normal: %f, %f\n", penetration.normal.x, penetration.normal.y);
+    printf("penetration depth: %f\n", penetration.depth);
+
+    interacting = true;
 }
 
 void Joueur::render(gf::RenderTarget& target){
     gf::Sprite shape;
-    shape.setTexture(texture);
+    shape.setTexture(*texture);
     shape.setScale(1.3);
-    shape.setPosition(position);
+    shape.setPosition(hitbox.center);
     shape.setAnchor(gf::Anchor::Center);
-    shape.setRotation(atan2(velocite.y, velocite.x));
+    shape.setRotation(gf::angle(velocite));
 
     target.draw(shape);
 
@@ -179,7 +189,7 @@ void Joueur::render(gf::RenderTarget& target){
         circleShape.setColor(gf::Color::Transparent);
         circleShape.setOutlineColor(gf::Color::Red);
         circleShape.setOutlineThickness(3.0f);
-        circleShape.setPosition(position);
+        circleShape.setPosition(hitbox.center);
         circleShape.setAnchor(gf::Anchor::Center);
         target.draw(circleShape);
     }
@@ -191,5 +201,6 @@ void Joueur::render(gf::RenderTarget& target){
     hitboxShape.setColor(gf::Color::Transparent);
     hitboxShape.setOutlineColor(gf::Color::Blue);
     hitboxShape.setOutlineThickness(1.0f);
+    hitboxShape.setAnchor(gf::Anchor::Center);
     target.draw(hitboxShape);    
 }

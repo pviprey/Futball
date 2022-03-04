@@ -1,17 +1,20 @@
-#include <cstdlib>
-
 #include "Equipe.h"
 #include "Terrain.h"
+
+#include <cstdlib>
 
 namespace{
     constexpr int TAILLE_EQUIPE = 5;
 }
 
-Equipe::Equipe(){
+Equipe::Equipe(bool sens){
 }
 
-Equipe::Equipe(std::vector<Joueur> equipe):composition(equipe){
-    disposition();
+Equipe::Equipe(std::vector<Joueur> equipe, bool sens):
+    composition(equipe),
+    sens(sens)
+    {
+        disposition();
 }
 
 bool Equipe::addJoueur(const Joueur& joueur){
@@ -36,7 +39,7 @@ bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources){
     return addJoueur(Joueur(poste, style, resources));
 }
 
-std::vector<Joueur> Equipe::getJoueurs() const {
+std::vector<Joueur>& Equipe::getJoueurs() {
     return composition;
 }
 
@@ -88,23 +91,19 @@ bool Equipe::hasGoal(){
 
 
 void Equipe::disposition(){
-    printf("---- pass disposition ----\n");
     int nbDefenseur = 0;
     int nbAttaquant = 0;
 
     for(auto & joueur : composition){
         switch(joueur.getPoste()){
             case Joueur::Poste::Gardien:
-                joueur.setPositionY(64*(GROUND_HEIGH)/2);
-                printf("gardien ajouté.\n");
+                joueur.setPositionY(0);
                 break;
             case Joueur::Poste::Defenseur:
                 nbDefenseur++;
-                printf("defenseur ajouté. (%i)\n", nbDefenseur);
                 break;
             case Joueur::Poste::Attaquant:
                 nbAttaquant++;
-                printf("attaquant ajouté. (%i)\n", nbAttaquant);
                 break;
         }
     }

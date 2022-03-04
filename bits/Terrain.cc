@@ -179,7 +179,7 @@ void Terrain::render(gf::RenderTarget& target) {
     for(auto coords : tiles.getPositionRange()) {
         gf::Sprite sprite(texture);
         sprite.setTextureRect(Ground);
-        sprite.setPosition(coords * SpriteSize);
+        sprite.setPosition((coords * SpriteSize)-TERRAINSIZE*SpriteSize/2);
         sprite.setAnchor(gf::Anchor::TopLeft);
         target.draw(sprite);
     }
@@ -286,15 +286,15 @@ void Terrain::render(gf::RenderTarget& target) {
                 break;
 
 
-            case Texture::Ground:
-                sprite.setTextureRect(Ground);
-                break;  
+            // case Texture::Ground:
+            //     sprite.setTextureRect(Ground);
+            //     break;  
 
             default:
                 continue;
         }
 
-        sprite.setPosition(coords * SpriteSize);
+        sprite.setPosition((coords * SpriteSize)-TERRAINSIZE*SpriteSize/2);
         sprite.setAnchor(gf::Anchor::TopLeft);
         target.draw(sprite);
     }    

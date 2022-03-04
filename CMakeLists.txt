@@ -15,6 +15,7 @@ add_executable(FOOT
   bits/Ballon.cc
   bits/Equipe.cc
   bits/Joueur.cc
+  bits/Physics.cc
 )
 
 target_link_libraries(FOOT

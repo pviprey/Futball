@@ -6,7 +6,6 @@
 #include <set>
 #include <string>
 #include <gf/TextureAtlas.h>
-#include <gf/Collision.h>
 
 #include "bits/Terrain.h"
 

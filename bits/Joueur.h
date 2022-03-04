@@ -10,6 +10,7 @@
 #include <gf/Time.h>
 #include <gf/ResourceManager.h>
 #include <gf/Circ.h>
+#include <gf/Collision.h>
 
 namespace{
     static constexpr float SPEED = 160.0f;
@@ -39,10 +40,11 @@ class Joueur : public gf::Entity{
 
         void deplacement(gf::Event event);
         void update(gf::Time time);
+        void interact(gf::Penetration penetration);
         void render(gf::RenderTarget& target);
     private:
 
-        const gf::Texture& texture;
+        const gf::Texture *texture;
 
         enum class Style{
             Recule,
@@ -54,11 +56,11 @@ class Joueur : public gf::Entity{
         Style style;  //0: reculé, 1: normal, 2:avancé
 
         gf::Vector2f velocite;
-        gf::Vector2f position;
 
         gf::CircF hitbox;
 
         bool current;
+        bool interacting;
 };
 
 #endif  //JOUEUR_H

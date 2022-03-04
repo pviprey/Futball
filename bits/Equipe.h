@@ -14,13 +14,13 @@
 
 class Equipe{
     public:
-        Equipe();
-        Equipe(std::vector<Joueur> equipe);
+        Equipe(bool sens);
+        Equipe(std::vector<Joueur> equipe, bool sens);
 
         bool addJoueur(const Joueur& joueur);
         bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
-        std::vector<Joueur> getJoueurs() const;
+        std::vector<Joueur>& getJoueurs();
 
         void deplacement(gf::Event event);
         void update(gf::Time time);
@@ -31,6 +31,8 @@ class Equipe{
         bool hasGoal();
 
         void disposition();
+
+        bool sens;
 };
 
 #endif  //EQUIPE_H

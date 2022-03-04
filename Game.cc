@@ -15,6 +15,7 @@
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
 #include "bits/Joueur.h"
+#include "bits/Physics.h"
 
 int main() {
     // Create the main window and the renderer
@@ -26,7 +27,7 @@ int main() {
 
     gf::ViewContainer views;
 
-    gf::ExtendView view(gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 32.0f, gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 70.0f);
+    gf::ExtendView view(gf::vec(0, 0), gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 70.0f);
     views.addView(view);
     view.setInitialFramebufferSize({ 1024, 768 });
 
@@ -44,13 +45,16 @@ int main() {
 
     Ballon ballon(resources);
 
-    Equipe equipe1 = Equipe();
-
+    Equipe equipe1 = Equipe(true);
     equipe1.addJoueur(Joueur(0, 1, resources));
     equipe1.addJoueur(Joueur(1, 1, resources));
     equipe1.addJoueur(Joueur(1, 1, resources));
     equipe1.addJoueur(Joueur(1, 1, resources));
     equipe1.addJoueur(Joueur(2, 1, resources));
+
+    Equipe equipe2 = Equipe(false);
+
+    Physics physic(ballon, equipe1, equipe2, terrain);
 
     // Start the game loop 
     while (window.isOpen()){
@@ -94,6 +98,8 @@ int main() {
     //std::printf("%g\n", 1/ips.asSeconds());
     equipe1.update(ips);
 
+    physic.collisionEquipeEquipe();
+    physic.collisionEquipeBallon();
 
     // Draw the entities
     renderer.setView(view);
