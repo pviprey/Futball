@@ -100,6 +100,8 @@ int main() {
 
     physic.collisionEquipeEquipe();
     physic.collisionEquipeBallon();
+    
+    ballon.update(ips);
 
     // Draw the entities
     renderer.setView(view);

@@ -9,7 +9,7 @@ void Physics::collisionEquipeEquipe(){
     for(size_t i = 0; i < joueurs.size(); i++){
         for(size_t j = i+1; j < joueurs.size(); j++){
             if(gf::collides(joueurs[i].getHitbox(), joueurs[j].getHitbox(), penetration)){
-                printf("%f %f\n", penetration.normal.x, penetration.normal.y);
+//                 printf("%f %f\n", penetration.normal.x, penetration.normal.y);
                 joueurs[i].interact(penetration);
             }
         }

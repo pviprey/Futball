@@ -5,7 +5,13 @@
 #include "Ballon.h"
 #include "Joueur.h"
 
+namespace{
+    static constexpr float BALLON_SPEED = 320.0f;
+    static constexpr float BALLON_ACCELERATION = -320.0f;
+}
+
 Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Ball/ball_soccer4.png")){
+    this->norm = 0.0f;
     this->velocite = {0, 0};
     this->hitbox.center = {0, 0};
     this->hitbox.radius = 8.0f;
@@ -18,20 +24,21 @@ gf::CircF Ballon::getHitbox() const {
 
 void Ballon::update(gf::Time time){
     if(pushed){
-        float acceleration = gf::euclideanLength(velocite);
-
-        hitbox.center += velocite * acceleration * time.asSeconds() * SPEED;
-
-        if(acceleration < 0.01){ 
+        norm += BALLON_ACCELERATION * time.asSeconds();      
+        
+        if(norm < 0.01){ 
             pushed = false;
+            norm = 0;
+            velocite = { 0, 0 };
         }
+
+        hitbox.center += velocite * norm * time.asSeconds();
     }
 }
 
 void Ballon::interact(gf::Penetration penetration, gf::Vector2f deplacement){
     pushed = true;
-
-    hitbox.center += penetration.depth * deplacement;
+    norm = BALLON_SPEED;
     velocite = deplacement;
 }
 

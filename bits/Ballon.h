@@ -23,6 +23,7 @@ class Ballon : public gf::Entity{
     private:
         const gf::Texture& texture;
 
+        float norm;
         gf::Vector2f velocite;
 
         gf::CircF hitbox;
