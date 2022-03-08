@@ -118,11 +118,11 @@ void Equipe::disposition(){
                 joueur.setCurrent();
                 break;
             case Joueur::Poste::Defenseur:
-                joueur.setPositionY((64*(GROUND_HEIGH)/(nbDefenseur+1))*countDef);
+                joueur.setPositionY(((64*(GROUND_HEIGH)/(nbDefenseur+1))*countDef)-GROUND_HEIGH*64/2);
                 countDef++;
                 break;
             case Joueur::Poste::Attaquant:
-                joueur.setPositionY((64*(GROUND_HEIGH)/(nbAttaquant+1))*countAtk);
+                joueur.setPositionY(((64*(GROUND_HEIGH)/(nbAttaquant+1))*countAtk)-GROUND_HEIGH*64/2);
                 countAtk++;
                 break;
         }        

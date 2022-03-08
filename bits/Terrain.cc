@@ -2,6 +2,7 @@
 
 #include <gf/Color.h>
 #include <gf/AssetManager.h>
+#include <gf/Shapes.h>
 
 #include "Terrain.h"
 
@@ -28,6 +29,15 @@ namespace{
 }
 
 Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):gf::Entity(1),
+        hitboxTop(gf::RectI::fromPositionSize(gf::Vector2i{-GROUND_LENGTH*64/2, -GROUND_HEIGH*64/2}, gf::Vector2i{GROUND_LENGTH*64, 10})),
+        hitboxBottom(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxLeftTop(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxRightTop(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxLeftBottom(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxRightBottom(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxGoalLeft(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+        hitboxGoalRight(gf::RectI::fromPositionSize(gf::Vector2i{}, gf::Vector2i{})),
+
     texture(atlas.getTexture()),
 
     LineVertical(atlas.getTextureRect("Centerred_Vertical_Line.png")),
@@ -297,5 +307,14 @@ void Terrain::render(gf::RenderTarget& target) {
         sprite.setPosition((coords * SpriteSize)-TERRAINSIZE*SpriteSize/2);
         sprite.setAnchor(gf::Anchor::TopLeft);
         target.draw(sprite);
+
+        //debug
+        gf::RectangleShape hitboxShape;
+        hitboxShape.setPosition(hitboxTop.getCenter());
+        hitboxShape.setColor(gf::Color::Transparent);
+        hitboxShape.setOutlineColor(gf::Color::Green);
+        hitboxShape.setOutlineThickness(1.5f);
+        hitboxShape.setAnchor(gf::Anchor::Center);
+        target.draw(hitboxShape);        
     }    
 }

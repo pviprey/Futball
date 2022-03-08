@@ -17,21 +17,22 @@ gf::CircF Ballon::getHitbox() const {
 }
 
 void Ballon::update(gf::Time time){
-    hitbox.center += velocite * time.asSeconds() * SPEED;
-
     if(pushed){
-        velocite -= 0.1;
-        if(velocite.x == 0 && velocite.y == 0){
+        float acceleration = gf::euclideanLength(velocite);
+
+        hitbox.center += velocite * acceleration * time.asSeconds() * SPEED;
+
+        if(acceleration < 0.01){ 
             pushed = false;
         }
     }
 }
 
-void Ballon::interact(gf::Penetration penetration){
+void Ballon::interact(gf::Penetration penetration, gf::Vector2f deplacement){
     pushed = true;
 
-    hitbox.center -= penetration.depth * penetration.normal;
-    velocite = penetration.normal * gf::Vector2f{1.5, 1.5};
+    hitbox.center += penetration.depth * deplacement;
+    velocite = deplacement;
 }
 
 void Ballon::render(gf::RenderTarget& target){

@@ -24,6 +24,8 @@ class Joueur : public gf::Entity{
         void setPosition(float posX, float posY);
         void setPositionY(float posY);
 
+        gf::Vector2f getVelocite();
+
         bool getCurrent();
         void setCurrent();
         void removeCurrent();

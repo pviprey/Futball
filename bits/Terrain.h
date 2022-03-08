@@ -10,6 +10,7 @@
 #include <gf/Array2D.h>
 #include <gf/RenderTarget.h>
 #include <gf/ResourceManager.h>
+#include <gf/Collision.h>
 
 #include "Data.h"
 
@@ -24,6 +25,16 @@ class Terrain : public gf::Entity{
         void render(gf::RenderTarget& target);        
     private:
         
+        gf::RectI hitboxTop,
+        hitboxBottom,
+        hitboxLeftTop,
+        hitboxRightTop,
+        hitboxLeftBottom,
+        hitboxRightBottom,
+        hitboxGoalLeft,
+        hitboxGoalRight;
+
+
         const gf::Texture& texture;
 
         gf::RectF LineVertical,

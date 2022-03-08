@@ -62,6 +62,9 @@ void Joueur::setPositionY(float posY){
     setPosition({this->hitbox.center.x, posY});
 }
 
+gf::Vector2f Joueur::getVelocite(){
+    return velocite;
+}
 
 bool Joueur::getCurrent(){
     return this->current;
@@ -202,5 +205,5 @@ void Joueur::render(gf::RenderTarget& target){
     hitboxShape.setOutlineColor(gf::Color::Blue);
     hitboxShape.setOutlineThickness(1.0f);
     hitboxShape.setAnchor(gf::Anchor::Center);
-    target.draw(hitboxShape);    
+    target.draw(hitboxShape);
 }

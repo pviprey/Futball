@@ -26,7 +26,7 @@ void Physics::collisionEquipeBallon(){
 
     for(size_t i = 0; i < joueurs.size(); i++){
         if(gf::collides(ballon.getHitbox(), joueurs[i].getHitbox(), penetration)){
-            ballon.interact(penetration);
+            ballon.interact(penetration, joueurs[i].getVelocite());
         }
     }    
 }
