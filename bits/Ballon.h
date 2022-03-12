@@ -18,7 +18,8 @@ class Ballon : public gf::Entity{
         gf::CircF getHitbox() const;
 
         void update(gf::Time time);
-        void interact(gf::Penetration penetration, gf::Vector2f deplacement);
+        void interact(gf::Penetration penetration, gf::Vector2f deplacement, bool marche);
+        void interact(gf::Penetration penetration);
         void render(gf::RenderTarget& target);        
     private:
         const gf::Texture& texture;
@@ -29,6 +30,8 @@ class Ballon : public gf::Entity{
         gf::CircF hitbox;
 
         bool pushed;
+        bool marche;
+        float dep_marche;
 };
 
 #endif  //BALLON_H

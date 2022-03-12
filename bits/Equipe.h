@@ -14,11 +14,11 @@
 
 class Equipe{
     public:
-        Equipe(bool sens);
-        Equipe(std::vector<Joueur> equipe, bool sens);
+        Equipe();
+        Equipe(std::vector<Joueur> equipe);
 
         bool addJoueur(const Joueur& joueur);
-        bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
+        bool addJoueur(int poste, int style,  gf::ResourceManager& resources, bool sens);
 
         std::vector<Joueur>& getJoueurs();
 

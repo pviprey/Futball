@@ -5,9 +5,11 @@
 #include "Ballon.h"
 #include "Joueur.h"
 
+#include <iostream>
+
 namespace{
-    static constexpr float BALLON_SPEED = 320.0f;
-    static constexpr float BALLON_ACCELERATION = -320.0f;
+    static constexpr float BALLON_SPEED = 300.0f;
+    static constexpr float BALLON_ACCELERATION = -300.0f;
 }
 
 Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Ball/ball_soccer4.png")){
@@ -16,6 +18,8 @@ Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Bal
     this->hitbox.center = {0, 0};
     this->hitbox.radius = 8.0f;
     this->pushed = false;
+    this->marche = false;
+    this->dep_marche = 0;
 }
 
 gf::CircF Ballon::getHitbox() const {
@@ -24,22 +28,37 @@ gf::CircF Ballon::getHitbox() const {
 
 void Ballon::update(gf::Time time){
     if(pushed){
-        norm += BALLON_ACCELERATION * time.asSeconds();      
+        if(marche){
+            hitbox.center += dep_marche * velocite;
         
-        if(norm < 0.01){ 
-            pushed = false;
-            norm = 0;
-            velocite = { 0, 0 };
-        }
+            marche = false;
+            dep_marche = 0;
+        }else{
+            norm += BALLON_ACCELERATION * time.asSeconds();
+            
+            if(norm < 0.01){ 
+                pushed = false;
+                norm = 0;
+                velocite = { 0, 0 };
+            }
 
-        hitbox.center += velocite * norm * time.asSeconds();
+            hitbox.center += velocite * norm * time.asSeconds();
+        }
     }
 }
 
-void Ballon::interact(gf::Penetration penetration, gf::Vector2f deplacement){
+void Ballon::interact(gf::Penetration penetration, gf::Vector2f deplacement, bool marche){
     pushed = true;
     norm = BALLON_SPEED;
     velocite = deplacement;
+
+    this->marche = marche;
+    dep_marche = penetration.depth;
+}
+
+void Ballon::interact(gf::Penetration penetration){
+    hitbox.center -= penetration.depth * penetration.normal;
+    //velocite = penetration.normal;
 }
 
 void Ballon::render(gf::RenderTarget& target){

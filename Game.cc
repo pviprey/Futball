@@ -45,14 +45,19 @@ int main() {
 
     Ballon ballon(resources);
 
-    Equipe equipe1 = Equipe(true);
-    equipe1.addJoueur(Joueur(0, 1, resources));
-    equipe1.addJoueur(Joueur(1, 1, resources));
-    equipe1.addJoueur(Joueur(1, 1, resources));
-    equipe1.addJoueur(Joueur(1, 1, resources));
-    equipe1.addJoueur(Joueur(2, 1, resources));
+    Equipe equipe1 = Equipe();
+    equipe1.addJoueur(Joueur(0, 1, resources, true));
+    equipe1.addJoueur(Joueur(1, 1, resources, true));
+    equipe1.addJoueur(Joueur(1, 1, resources, true));
+    equipe1.addJoueur(Joueur(1, 1, resources, true));
+    equipe1.addJoueur(Joueur(2, 1, resources, true));
 
-    Equipe equipe2 = Equipe(false);
+    Equipe equipe2 = Equipe();
+    // equipe2.addJoueur(Joueur(0, 1, resources, false));
+    // equipe2.addJoueur(Joueur(1, 1, resources, false));
+    // equipe2.addJoueur(Joueur(1, 1, resources, false));
+    // equipe2.addJoueur(Joueur(1, 1, resources, false));
+    // equipe2.addJoueur(Joueur(2, 1, resources, false));
 
     Physics physic(ballon, equipe1, equipe2, terrain);
 
@@ -97,9 +102,12 @@ int main() {
     gf::Time ips = clock.restart();
     //std::printf("%g\n", 1/ips.asSeconds());
     equipe1.update(ips);
+    equipe2.update(ips);
 
     physic.collisionEquipeEquipe();
-    physic.collisionEquipeBallon();
+    physic.collisionsEquipeTerrain();
+    physic.collisionBallonEquipe();
+    physic.collisionsBallonTerrain();
     
     ballon.update(ips);
 
@@ -110,6 +118,7 @@ int main() {
     terrain.render(renderer);
     ballon.render(renderer);
     equipe1.render(renderer);
+    equipe2.render(renderer);
 
     renderer.display();
     }

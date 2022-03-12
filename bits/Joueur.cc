@@ -11,19 +11,35 @@ namespace{
     //static constexpr float SPEED = 120.0f;
 }
 
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources):texture(&resources.getTexture("Players/characterBlue (1).png")){
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):texture(&resources.getTexture("Players/characterBlue (1).png")){
+    
+    this->sens = sens;
+    this->marche = false;
+
     switch(poste){
         case 0:
             this->poste = Poste::Gardien;
-            hitbox.center.x = 13 * -64;
+            if(sens){
+                hitbox.center.x = 13 * -64;
+            }else{
+                hitbox.center.x = 13 * 64;
+            }
             break;
         case 1:
             this->poste = Poste::Defenseur;
-            hitbox.center.x = 9 * -64;
+            if(sens){
+                hitbox.center.x = 9 * -64;
+            }else{
+                hitbox.center.x = 9 * 64;
+            }
             break;
         case 2:
             this->poste = Poste::Attaquant;
-            hitbox.center.x = 3 * -64;
+            if(sens){
+                hitbox.center.x = 3 * -64;
+            }else{
+                hitbox.center.x = 3 * 64;
+            }
             break;
     }
 
@@ -60,6 +76,10 @@ void Joueur::setPosition(float posX, float posY){
 
 void Joueur::setPositionY(float posY){
     setPosition({this->hitbox.center.x, posY});
+}
+
+bool Joueur::getMarche(){
+    return marche;
 }
 
 gf::Vector2f Joueur::getVelocite(){
@@ -118,6 +138,10 @@ void Joueur::deplacement(gf::Event event){
                         velocite.x = 1;
                     break;
 
+                    case gf::Keycode::LeftShift:
+                        marche = true;
+                    break;
+
                     default:
                     break;
                 }
@@ -146,6 +170,10 @@ void Joueur::deplacement(gf::Event event){
                         velocite.x = 0;
                     break;
 
+                    case gf::Keycode::LeftShift:
+                        marche = false;
+                    break;
+
                     default:
                     break;
                 }
@@ -161,17 +189,20 @@ void Joueur::update(gf::Time time){
     if(velocite.x != 0 || velocite.y != 0){
         velocite = gf::normalize(velocite);
     }
-
-    hitbox.center += velocite * time.asSeconds() * SPEED;
+    
+    if(marche){
+        hitbox.center += velocite * time.asSeconds() * SPEED/1.4;
+    }else{
+        hitbox.center += velocite * time.asSeconds() * SPEED;
+    }
 }
 
 void Joueur::interact(gf::Penetration penetration){
     hitbox.center -= penetration.depth * penetration.normal;
-    //velocite -= gf::dot(velocite, penetration.normal);
     velocite *= gf::Vector2f{.2, .2};
     printf("velocite : %f, %f\n", velocite.x, velocite.y);
     printf("penetration normal: %f, %f\n", penetration.normal.x, penetration.normal.y);
-    printf("penetration depth: %f\n", penetration.depth);
+    printf("penetration depth: %f\n---------------------------\n", penetration.depth);
 
     interacting = true;
 }
@@ -182,7 +213,11 @@ void Joueur::render(gf::RenderTarget& target){
     shape.setScale(1.3);
     shape.setPosition(hitbox.center);
     shape.setAnchor(gf::Anchor::Center);
-    shape.setRotation(gf::angle(velocite));
+    if(sens){
+        shape.setRotation(gf::angle(velocite));
+    }else{
+        shape.setRotation(gf::angle(-velocite));
+    }
 
     target.draw(shape);
 

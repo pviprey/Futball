@@ -18,11 +18,13 @@ namespace{
 
 class Joueur : public gf::Entity{
     public:
-        Joueur(int poste, int style, gf::ResourceManager& resources);
+        Joueur(int poste, int style, gf::ResourceManager& resources, bool sens);
 
         void setPosition(gf::Vector2f);
         void setPosition(float posX, float posY);
         void setPositionY(float posY);
+
+        bool getMarche();
 
         gf::Vector2f getVelocite();
 
@@ -45,6 +47,8 @@ class Joueur : public gf::Entity{
         void interact(gf::Penetration penetration);
         void render(gf::RenderTarget& target);
     private:
+        bool sens;
+        bool marche;
 
         const gf::Texture *texture;
 

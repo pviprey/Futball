@@ -21,19 +21,24 @@ class Terrain : public gf::Entity{
     public:
         Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources);
 
+        std::vector<gf::RectF>& getHitboxs();
+        std::vector<gf::RectF>& getGoals();
+
         void setData();
-        void render(gf::RenderTarget& target);        
+        void render(gf::RenderTarget& target);
     private:
-        
-        gf::RectI hitboxTop,
-        hitboxBottom,
+        gf::RectF hitboxTop,
         hitboxLeftTop,
         hitboxRightTop,
+
+        hitboxBottom,
         hitboxLeftBottom,
         hitboxRightBottom,
+
         hitboxGoalLeft,
         hitboxGoalRight;
 
+        std::vector<gf::RectF> hitboxs;
 
         const gf::Texture& texture;
 

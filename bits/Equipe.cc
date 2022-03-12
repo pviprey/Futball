@@ -7,13 +7,11 @@ namespace{
     constexpr int TAILLE_EQUIPE = 5;
 }
 
-Equipe::Equipe(bool sens){
+Equipe::Equipe(){
 }
 
-Equipe::Equipe(std::vector<Joueur> equipe, bool sens):
-    composition(equipe),
-    sens(sens)
-    {
+Equipe::Equipe(std::vector<Joueur> equipe):
+    composition(equipe){
         disposition();
 }
 
@@ -35,8 +33,8 @@ bool Equipe::addJoueur(const Joueur& joueur){
     return true;
 }
 
-bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources){
-    return addJoueur(Joueur(poste, style, resources));
+bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources, bool sens){
+    return addJoueur(Joueur(poste, style, resources, sens));
 }
 
 std::vector<Joueur>& Equipe::getJoueurs() {

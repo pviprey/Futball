@@ -24,7 +24,11 @@ class Physics {
             terrain(t){}
 
         void collisionEquipeEquipe();
-        void collisionEquipeBallon();
+        void collisionsEquipeTerrain();
+        
+        void collisionBallonEquipe();
+        void collisionsBallonTerrain();
+
     private:
         Ballon& ballon;
         Equipe& equipe1;
