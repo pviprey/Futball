@@ -11,28 +11,28 @@
 #include <gf/Time.h>
 
 #include "Joueur.h"
+#include "Ballon.h"
 
 class Equipe{
     public:
-        Equipe();
-        Equipe(std::vector<Joueur> equipe);
+        Equipe(bool sens);
+        Equipe(std::vector<Joueur> equipe, bool sens);
 
-        bool addJoueur(const Joueur& joueur);
-        bool addJoueur(int poste, int style,  gf::ResourceManager& resources, bool sens);
+        bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
         std::vector<Joueur>& getJoueurs();
+        void switchCurrentToClosest(Ballon& ballon);
 
         void deplacement(gf::Event event);
         void update(gf::Time time);
         void render(gf::RenderTarget& target);
     private:
         std::vector<Joueur> composition;
-
-        bool hasGoal();
-
-        void disposition();
-
         bool sens;
+
+        bool addJoueur(const Joueur& joueur);
+        bool hasGoal();
+        void disposition();
 };
 
 #endif  //EQUIPE_H

@@ -7,64 +7,61 @@
 #include <gf/VectorOps.h>
 #include <gf/Log.h>
 
-namespace{
-    //static constexpr float SPEED = 120.0f;
+#include <iostream>
+
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):
+    texture(&resources.getTexture("Players/characterBlue (1).png")),
+    sens(sens){
+        this->marche = false;
+
+        switch(poste){
+            case 0:
+                this->poste = Poste::Gardien;
+                if(sens){
+                    hitbox.center.x = 13 * -64;
+                }else{
+                    hitbox.center.x = 13 * 64;
+                }
+                break;
+            case 1:
+                this->poste = Poste::Defenseur;
+                if(sens){
+                    hitbox.center.x = 9 * -64;
+                }else{
+                    hitbox.center.x = 9 * 64;
+                }
+                break;
+            case 2:
+                this->poste = Poste::Attaquant;
+                if(sens){
+                    hitbox.center.x = 3 * -64;
+                }else{
+                    hitbox.center.x = 3 * 64;
+                }
+                break;
+        }
+
+        switch(style){
+            case 0:
+                this->style = Style::Recule;
+                hitbox.center.x -= hitbox.center.x*0.1;
+                break;
+            case 1:
+                this->style = Style::Normal;
+                break;
+            case 2:
+                this->style = Style::Avance;
+                hitbox.center.x += hitbox.center.x*0.1;
+                break;
+        }
+
+        this->velocite = {0,0};
+
+        this->hitbox.radius = 11.0f;
+
+        this->current = false;
+        this->interacting = false;
 }
-
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):texture(&resources.getTexture("Players/characterBlue (1).png")){
-    
-    this->sens = sens;
-    this->marche = false;
-
-    switch(poste){
-        case 0:
-            this->poste = Poste::Gardien;
-            if(sens){
-                hitbox.center.x = 13 * -64;
-            }else{
-                hitbox.center.x = 13 * 64;
-            }
-            break;
-        case 1:
-            this->poste = Poste::Defenseur;
-            if(sens){
-                hitbox.center.x = 9 * -64;
-            }else{
-                hitbox.center.x = 9 * 64;
-            }
-            break;
-        case 2:
-            this->poste = Poste::Attaquant;
-            if(sens){
-                hitbox.center.x = 3 * -64;
-            }else{
-                hitbox.center.x = 3 * 64;
-            }
-            break;
-    }
-
-    switch(style){
-        case 0:
-            this->style = Style::Recule;
-            hitbox.center.x -= hitbox.center.x*0.1;
-            break;
-        case 1:
-            this->style = Style::Normal;
-            break;
-        case 2:
-            this->style = Style::Avance;
-            hitbox.center.x += hitbox.center.x*0.1;
-            break;
-    }
-
-    this->velocite = {0,0};
-
-    this->hitbox.radius = 11.0f;
-
-    this->current = false;
-    this->interacting = false;
-}
-
 
 void Joueur::setPosition(gf::Vector2f position){
     this->hitbox.center = position;
@@ -87,23 +84,15 @@ gf::Vector2f Joueur::getVelocite(){
 }
 
 bool Joueur::getCurrent(){
-    return this->current;
+    return current;
 }
 
-void Joueur::setCurrent(){
-    this->current = true;
-}
+void Joueur::switchCurrentTo(Joueur& joueur){
+    velocite = {0.0f, 0.0f};
 
-void Joueur::removeCurrent(){
-    this->current = false;
-}
-
-void Joueur::switchCurrent(Joueur& joueur){
-    this->velocite = {0.0f, 0.0f};
-    this->removeCurrent();
+    removeCurrent();
     joueur.setCurrent();
 }
-
 
 Joueur::Poste Joueur::getPoste() const {
     return poste;
@@ -200,9 +189,6 @@ void Joueur::update(gf::Time time){
 void Joueur::interact(gf::Penetration penetration){
     hitbox.center -= penetration.depth * penetration.normal;
     velocite *= gf::Vector2f{.2, .2};
-    printf("velocite : %f, %f\n", velocite.x, velocite.y);
-    printf("penetration normal: %f, %f\n", penetration.normal.x, penetration.normal.y);
-    printf("penetration depth: %f\n---------------------------\n", penetration.depth);
 
     interacting = true;
 }
@@ -225,7 +211,11 @@ void Joueur::render(gf::RenderTarget& target){
         gf::CircleShape circleShape;
         circleShape.setRadius(20.0f);
         circleShape.setColor(gf::Color::Transparent);
-        circleShape.setOutlineColor(gf::Color::Red);
+        if(sens){
+            circleShape.setOutlineColor(gf::Color::Red);
+        }else{
+            circleShape.setOutlineColor(gf::Color::Blue);
+        }
         circleShape.setOutlineThickness(3.0f);
         circleShape.setPosition(hitbox.center);
         circleShape.setAnchor(gf::Anchor::Center);
@@ -241,4 +231,12 @@ void Joueur::render(gf::RenderTarget& target){
     hitboxShape.setOutlineThickness(1.0f);
     hitboxShape.setAnchor(gf::Anchor::Center);
     target.draw(hitboxShape);
+}
+
+void Joueur::setCurrent(){
+    this->current = true;
+}
+
+void Joueur::removeCurrent(){
+    this->current = false;
 }

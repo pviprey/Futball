@@ -14,7 +14,7 @@
 #include "bits/Terrain.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
-#include "bits/Joueur.h"
+// #include "bits/Joueur.h"
 #include "bits/Physics.h"
 
 int main() {
@@ -34,7 +34,6 @@ int main() {
     /*(ref 2. update)*/
     gf::Clock clock;
     renderer.clear(gf::Color::Black); //nettoyer l'écran avant de commencer
-    gf::Vector2f mousePosition;
 
     gf::ResourceManager resources;
     resources.addSearchDir("data");
@@ -45,19 +44,21 @@ int main() {
 
     Ballon ballon(resources);
 
-    Equipe equipe1 = Equipe();
-    equipe1.addJoueur(Joueur(0, 1, resources, true));
-    equipe1.addJoueur(Joueur(1, 1, resources, true));
-    equipe1.addJoueur(Joueur(1, 1, resources, true));
-    equipe1.addJoueur(Joueur(1, 1, resources, true));
-    equipe1.addJoueur(Joueur(2, 1, resources, true));
+    Equipe equipe1 = Equipe(true);
+    equipe1.addJoueur(0, 1, resources);
+    equipe1.addJoueur(1, 1, resources);
+    equipe1.addJoueur(1, 1, resources);
+    equipe1.addJoueur(1, 1, resources);
+    equipe1.addJoueur(2, 1, resources);
+    equipe1.switchCurrentToClosest(ballon);
 
-    Equipe equipe2 = Equipe();
-    // equipe2.addJoueur(Joueur(0, 1, resources, false));
-    // equipe2.addJoueur(Joueur(1, 1, resources, false));
-    // equipe2.addJoueur(Joueur(1, 1, resources, false));
-    // equipe2.addJoueur(Joueur(1, 1, resources, false));
-    // equipe2.addJoueur(Joueur(2, 1, resources, false));
+    Equipe equipe2 = Equipe(false);
+    equipe2.addJoueur(0, 1, resources);
+    equipe2.addJoueur(1, 1, resources);
+    equipe2.addJoueur(1, 1, resources);
+    equipe2.addJoueur(1, 1, resources);
+    equipe2.addJoueur(2, 1, resources);
+    equipe2.switchCurrentToClosest(ballon);
 
     Physics physic(ballon, equipe1, equipe2, terrain);
 
@@ -76,14 +77,18 @@ int main() {
                     window.close();
                 break;
                 
-                case gf::EventType::MouseMoved:
-                    mousePosition = renderer.mapPixelToCoords(event.mouseCursor.coords);
-                break;
-                
                 case gf::EventType::KeyPressed:     //touche appuyé
                     switch (event.key.keycode){
                         case gf::Keycode::Escape:
                             window.close();
+                        break;
+
+                        case gf::Keycode::Space:
+                            equipe1.switchCurrentToClosest(ballon);
+                        break;
+
+                        case gf::Keycode::RightCtrl:
+                            equipe2.switchCurrentToClosest(ballon);
                         break;
 
                         default:

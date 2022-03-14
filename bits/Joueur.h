@@ -8,6 +8,7 @@
 #include <gf/Vector.h>
 #include <gf/Event.h>
 #include <gf/Time.h>
+#include <gf/RenderWindow.h>
 #include <gf/ResourceManager.h>
 #include <gf/Circ.h>
 #include <gf/Collision.h>
@@ -29,9 +30,7 @@ class Joueur : public gf::Entity{
         gf::Vector2f getVelocite();
 
         bool getCurrent();
-        void setCurrent();
-        void removeCurrent();
-        void switchCurrent(Joueur& Joueur);
+        void switchCurrentTo(Joueur& Joueur);
 
         enum class Poste{
             Gardien,
@@ -47,10 +46,11 @@ class Joueur : public gf::Entity{
         void interact(gf::Penetration penetration);
         void render(gf::RenderTarget& target);
     private:
-        bool sens;
-        bool marche;
+        void setCurrent();
+        void removeCurrent();
 
         const gf::Texture *texture;
+        bool sens;
 
         enum class Style{
             Recule,
@@ -61,12 +61,16 @@ class Joueur : public gf::Entity{
         Poste poste;  //0: gardien, 1: defenseur, 2: attaquant
         Style style;  //0: reculé, 1: normal, 2:avancé
 
+        bool marche;
+
         gf::Vector2f velocite;
 
         gf::CircF hitbox;
 
         bool current;
         bool interacting;
+
+        // gf::Vector2f mousePosition;
 };
 
 #endif  //JOUEUR_H

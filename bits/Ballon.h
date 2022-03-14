@@ -20,7 +20,8 @@ class Ballon : public gf::Entity{
         void update(gf::Time time);
         void interact(gf::Penetration penetration, gf::Vector2f deplacement, bool marche);
         void interact(gf::Penetration penetration);
-        void render(gf::RenderTarget& target);        
+        void render(gf::RenderTarget& target);
+
     private:
         const gf::Texture& texture;
 
@@ -31,7 +32,7 @@ class Ballon : public gf::Entity{
 
         bool pushed;
         bool marche;
-        float dep_marche;
+        float depth_marche;
 };
 
 #endif  //BALLON_H

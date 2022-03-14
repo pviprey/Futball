@@ -29,11 +29,13 @@ class Physics {
         void collisionBallonEquipe();
         void collisionsBallonTerrain();
 
+        void getClosest();
     private:
         Ballon& ballon;
         Equipe& equipe1;
         Equipe& equipe2;
         Terrain& terrain;
+
 };
 
 #endif  //PHYSICS_H
