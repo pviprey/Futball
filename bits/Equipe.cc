@@ -1,5 +1,4 @@
 #include "Equipe.h"
-#include "Terrain.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -45,20 +44,20 @@ std::vector<Joueur>& Equipe::getJoueurs(){
 }
 
 void Equipe::switchCurrentToClosest(Ballon& ballon){
-    Joueur& closest = composition[0];
-    Joueur& current = composition[0];
+    int closest = 0;
+    int current = 0;
 
     for(size_t i = 1; i < composition.size(); i++){
-        if(gf::euclideanDistance(ballon.getHitbox().center, closest.getHitbox().center) > gf::euclideanDistance(ballon.getHitbox().center, composition[i].getHitbox().center)){
-            closest = composition[i];
+        if(gf::euclideanDistance(ballon.getHitbox().center, composition[closest].getHitbox().center) > gf::euclideanDistance(ballon.getHitbox().center, composition[i].getHitbox().center)){
+            closest = i;
         }
 
         if(composition[i].getCurrent()){
-            current = composition[i];
+            current = i;
         }
     }
 
-    current.switchCurrentTo(closest);
+    composition[current].switchCurrentTo(composition[closest]);
 }
 
 void Equipe::deplacement(gf::Event event){
@@ -92,6 +91,35 @@ void Equipe::render(gf::RenderTarget& target){
     }
 }
 
+void Equipe::isDefending(Ballon& ballon, Terrain& terrain){
+    for(auto & joueur : composition){
+        switch(joueur.getPoste()){
+            case Joueur::Poste::Gardien:
+                if(sens){
+                    if(ballon.getPushed()){
+                        //joueur.deplacement(gf::Vector2f{terrain.getLeftGoal().getCenter().x + terrain.getLeftGoal().getSize().x/2 + 15, ballon.getHitbox().center.y - terrain.getLeftGoal().getCenter().y});
+                    }
+                }else{
+                    if(ballon.getPushed()){
+                        std::cout << "DEBUG:" << terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15 << std::endl;
+                        joueur.deplacement(gf::Vector2f{
+                            terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15,
+                            tan(gf::angle(terrain.getRightGoal().getCenter() - ballon.getHitbox().center)) * (terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x - 15)
+                        });
+                    }                    
+                }
+            break;
+
+            case Joueur::Poste::Defenseur:
+                
+            break;
+
+            case Joueur::Poste::Attaquant:
+                
+            break;
+        }
+    }
+}
 
 bool Equipe::hasGoal(){
     for(auto & joueur : composition){

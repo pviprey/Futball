@@ -37,8 +37,8 @@ Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):
     hitboxLeftBottom(gf::RectF::fromPositionSize(gf::Vector2f{-GROUND_LENGTH*64/2, GROUND_HEIGH*64/2+15-(GROUND_HEIGH-8)*64-47}, gf::Vector2f{70, (GROUND_HEIGH-7)*64-17})),
     hitboxRightBottom(gf::RectF::fromPositionSize(gf::Vector2f{GROUND_LENGTH*64/2-70, GROUND_HEIGH*64/2+15-(GROUND_HEIGH-8)*64-47}, gf::Vector2f{70, (GROUND_HEIGH-7)*64-17})),
 
-    hitboxGoalLeft(gf::RectF::fromPositionSize(gf::Vector2f{}, gf::Vector2f{})),
-    hitboxGoalRight(gf::RectF::fromPositionSize(gf::Vector2f{}, gf::Vector2f{})),
+    hitboxGoalLeft(gf::RectF::fromPositionSize(gf::Vector2f{-GROUND_LENGTH*64/2, -64}, gf::Vector2f{70, 64*2})),
+    hitboxGoalRight(gf::RectF::fromPositionSize(gf::Vector2f{GROUND_LENGTH*64/2-70, -64}, gf::Vector2f{70, 64*2})),
 
     hitboxs(),
 
@@ -89,10 +89,23 @@ Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):
         hitboxs.push_back(hitboxLeftBottom);
         hitboxs.push_back(hitboxRightBottom);
 
+        goals.push_back(hitboxGoalLeft);
     }
 
 std::vector<gf::RectF>& Terrain::getHitboxs(){
     return hitboxs;
+}
+
+std::vector<gf::RectF>& Terrain::getGoals(){
+    return goals;
+}
+
+gf::RectF Terrain::getLeftGoal(){
+    return hitboxGoalLeft;
+}
+
+gf::RectF Terrain::getRightGoal(){
+    return hitboxGoalRight;
 }
 
 void Terrain::setData() {
@@ -378,6 +391,24 @@ void Terrain::render(gf::RenderTarget& target) {
         hitboxShapeRightBottom.setOutlineColor(gf::Color::Green);
         hitboxShapeRightBottom.setOutlineThickness(1.5f);
         hitboxShapeRightBottom.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeRightBottom);        
+        target.draw(hitboxShapeRightBottom);
+
+        gf::RectangleShape hitboxShapeGoalLeft;
+        hitboxShapeGoalLeft.setPosition(hitboxGoalLeft.getCenter());
+        hitboxShapeGoalLeft.setSize(hitboxGoalLeft.getSize());
+        hitboxShapeGoalLeft.setColor(gf::Color::Violet);
+        hitboxShapeGoalLeft.setOutlineColor(gf::Color::Violet);
+        hitboxShapeGoalLeft.setOutlineThickness(1.5f);
+        hitboxShapeGoalLeft.setAnchor(gf::Anchor::Center);
+        target.draw(hitboxShapeGoalLeft);
+
+        gf::RectangleShape hitboxShapeGoalRight;
+        hitboxShapeGoalRight.setPosition(hitboxGoalRight.getCenter());
+        hitboxShapeGoalRight.setSize(hitboxGoalRight.getSize());
+        hitboxShapeGoalRight.setColor(gf::Color::Violet);
+        hitboxShapeGoalRight.setOutlineColor(gf::Color::Violet);
+        hitboxShapeGoalRight.setOutlineThickness(1.5f);
+        hitboxShapeGoalRight.setAnchor(gf::Anchor::Center);
+        target.draw(hitboxShapeGoalRight);
     }    
 }

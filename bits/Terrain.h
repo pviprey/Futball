@@ -23,6 +23,9 @@ class Terrain : public gf::Entity{
 
         std::vector<gf::RectF>& getHitboxs();
         std::vector<gf::RectF>& getGoals();
+        gf::RectF getLeftGoal();
+        gf::RectF getRightGoal();
+
 
         void setData();
         void render(gf::RenderTarget& target);
@@ -39,6 +42,7 @@ class Terrain : public gf::Entity{
         hitboxGoalRight;
 
         std::vector<gf::RectF> hitboxs;
+        std::vector<gf::RectF> goals;
 
         const gf::Texture& texture;
 

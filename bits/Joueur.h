@@ -41,14 +41,16 @@ class Joueur : public gf::Entity{
 
         gf::CircF getHitbox() const;
 
+        void deplacement(gf::Vector2f arrivee);
         void deplacement(gf::Event event);
         void update(gf::Time time);
         void interact(gf::Penetration penetration);
         void render(gf::RenderTarget& target);
+
     private:
         void setCurrent();
         void removeCurrent();
-
+        bool approxAngle(float value, float test, float ampitude);
         const gf::Texture *texture;
         bool sens;
 

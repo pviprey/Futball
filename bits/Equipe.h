@@ -11,6 +11,7 @@
 #include <gf/Time.h>
 
 #include "Joueur.h"
+#include "Terrain.h"
 #include "Ballon.h"
 
 class Equipe{
@@ -26,6 +27,9 @@ class Equipe{
         void deplacement(gf::Event event);
         void update(gf::Time time);
         void render(gf::RenderTarget& target);
+
+        void isDefending(Ballon& ballon, Terrain& terrain);
+        void isAttacking();
     private:
         std::vector<Joueur> composition;
         bool sens;

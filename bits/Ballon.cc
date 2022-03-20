@@ -27,6 +27,10 @@ gf::CircF Ballon::getHitbox() const {
     return hitbox;
 }
 
+bool Ballon::getPushed() const {
+    return pushed;
+}
+
 void Ballon::update(gf::Time time){
     if(pushed){
         if(marche){

@@ -16,6 +16,7 @@ class Ballon : public gf::Entity{
         Ballon(gf::ResourceManager& resources);
 
         gf::CircF getHitbox() const;
+        bool getPushed() const;
 
         void update(gf::Time time);
         void interact(gf::Penetration penetration, gf::Vector2f deplacement, bool marche);

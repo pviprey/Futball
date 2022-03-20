@@ -100,6 +100,8 @@ int main() {
                 break;
             }
 
+            equipe2.isDefending(ballon, terrain);
+
             views.processEvent(event);
         }
 

@@ -102,6 +102,48 @@ gf::CircF Joueur::getHitbox() const {
     return hitbox;
 }
 
+void Joueur::deplacement(gf::Vector2f arrivee){
+    assert(!current);
+
+    float angle = gf::angle(hitbox.center - arrivee);
+    std::cout << "angle:" << angle << std::endl;
+    std::cout << "posX:";
+    if(abs(hitbox.center.x - arrivee.x) > 0.1 || abs(hitbox.center.y - arrivee.y) > 0.1){
+        if(approxAngle(angle, 0, 45/2)){    //transformer les angles en radiant CONNARD
+            velocite.x = 1;
+        }
+        else if(approxAngle(angle, 45, 45/2)){
+            velocite.x = 1;
+            velocite.y = 1;
+        }
+        else if(approxAngle(angle, 90, 45/2)){
+            velocite.y = 1;
+        }
+        else if(approxAngle(angle, 135, 45/2)){
+            velocite.x = -1;
+            velocite.y = 1;
+        }
+        else if(approxAngle(angle, 180, 45/2)){
+            velocite.x = -1;
+        }
+        else if(approxAngle(angle, 225, 45/2)){
+            velocite.x = -1;
+            velocite.y = -1;
+        }
+        else if(approxAngle(angle, 270, 45/2)){
+            velocite.y = -1;
+        }
+        else if(approxAngle(angle, 315, 45/2)){
+            velocite.x = 1;
+            velocite.y = -1;
+        }
+    }
+}
+
+bool Joueur::approxAngle(float value, float test, float amplitude){
+    return value >= test-amplitude && value <= test+amplitude;
+}
+
 void Joueur::deplacement(gf::Event event){
     if(current){
         switch (event.type){
@@ -207,7 +249,7 @@ void Joueur::render(gf::RenderTarget& target){
 
     target.draw(shape);
 
-    if(this->current){
+    if(current){
         gf::CircleShape circleShape;
         circleShape.setRadius(20.0f);
         circleShape.setColor(gf::Color::Transparent);
@@ -234,9 +276,9 @@ void Joueur::render(gf::RenderTarget& target){
 }
 
 void Joueur::setCurrent(){
-    this->current = true;
+    current = true;
 }
 
 void Joueur::removeCurrent(){
-    this->current = false;
+    current = false;
 }
