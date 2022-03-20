@@ -9,7 +9,6 @@
 
 #include "bits/Terrain.h"
 
-
 class Game {
     public:
         Game(const gf::TextureAtlas& atlas);

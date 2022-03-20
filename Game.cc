@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <gf/Event.h>
 #include <gf/Font.h>
 #include <gf/Window.h>
@@ -11,11 +13,15 @@
 #include <gf/Time.h>
 
 #include "Game.h"
-#include "bits/Terrain.h"
+//#include "bits/Terrain.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
-// #include "bits/Joueur.h"
 #include "bits/Physics.h"
+
+namespace{
+    int scoreLeft = 0;
+    int scoreRight = 0;
+}
 
 int main() {
     // Create the main window and the renderer
@@ -44,23 +50,23 @@ int main() {
 
     Ballon ballon(resources);
 
-    Equipe equipe1 = Equipe(true);
-    equipe1.addJoueur(0, 1, resources);
-    equipe1.addJoueur(1, 1, resources);
-    equipe1.addJoueur(1, 1, resources);
-    equipe1.addJoueur(1, 1, resources);
-    equipe1.addJoueur(2, 1, resources);
-    equipe1.switchCurrentToClosest(ballon);
+    Equipe equipeLeft = Equipe(true);
+    equipeLeft.addJoueur(0, 1, resources);
+    equipeLeft.addJoueur(1, 1, resources);
+    equipeLeft.addJoueur(1, 1, resources);
+    equipeLeft.addJoueur(1, 1, resources);
+    equipeLeft.addJoueur(2, 1, resources);
+    equipeLeft.switchCurrentToClosest(ballon);
 
-    Equipe equipe2 = Equipe(false);
-    equipe2.addJoueur(0, 1, resources);
-    equipe2.addJoueur(1, 1, resources);
-    equipe2.addJoueur(1, 1, resources);
-    equipe2.addJoueur(1, 1, resources);
-    equipe2.addJoueur(2, 1, resources);
-    equipe2.switchCurrentToClosest(ballon);
+    Equipe equipeRight = Equipe(false);
+    equipeRight.addJoueur(0, 1, resources);
+    equipeRight.addJoueur(1, 1, resources);
+    equipeRight.addJoueur(1, 1, resources);
+    equipeRight.addJoueur(1, 1, resources);
+    equipeRight.addJoueur(2, 1, resources);
+    equipeRight.switchCurrentToClosest(ballon);
 
-    Physics physic(ballon, equipe1, equipe2, terrain);
+    Physics physic(ballon, equipeLeft, equipeRight, terrain);
 
     // Start the game loop 
     while (window.isOpen()){
@@ -69,8 +75,31 @@ int main() {
 
         // 1. recevoir les actions du joueur
         while (window.pollEvent(event)){   //reception action sur clavier
+            equipeLeft.deplacement(event);
+            equipeRight.deplacement(event);
 
-            equipe1.deplacement(event);
+
+            if(physic.ballInLeftGoal()){
+                scoreRight++;
+                equipeLeft.engagement(true);
+                equipeRight.engagement(false);
+                ballon.engagement();
+
+                equipeLeft.switchCurrentToClosest(ballon);
+                equipeRight.switchCurrentToClosest(ballon);
+
+                std::cout << "Équipe Gauche: " << scoreRight << "Équipe droite: " << scoreLeft << std::endl;
+            }
+
+            if(physic.ballInRightGoal()){
+                scoreLeft++;
+                equipeLeft.engagement(false);
+                equipeRight.engagement(true);
+                ballon.engagement();
+
+                equipeLeft.switchCurrentToClosest(ballon);
+                equipeRight.switchCurrentToClosest(ballon);                
+            }
 
             switch (event.type){
                 case gf::EventType::Closed: //fermeture de la fenetre
@@ -83,12 +112,12 @@ int main() {
                             window.close();
                         break;
 
-                        case gf::Keycode::Space:
-                            equipe1.switchCurrentToClosest(ballon);
+                        case gf::Keycode::Tab:
+                            equipeLeft.switchCurrentToClosest(ballon);
                         break;
 
-                        case gf::Keycode::RightCtrl:
-                            equipe2.switchCurrentToClosest(ballon);
+                        case gf::Keycode::Space:
+                            equipeRight.switchCurrentToClosest(ballon);
                         break;
 
                         default:
@@ -100,7 +129,7 @@ int main() {
                 break;
             }
 
-            equipe2.isDefending(ballon, terrain);
+            equipeRight.isDefending(ballon, terrain);
 
             views.processEvent(event);
         }
@@ -108,8 +137,8 @@ int main() {
     // 2. update 60 fois MINIMUM
     gf::Time ips = clock.restart();
     //std::printf("%g\n", 1/ips.asSeconds());
-    equipe1.update(ips);
-    equipe2.update(ips);
+    equipeLeft.update(ips);
+    equipeRight.update(ips);
 
     physic.collisionEquipeEquipe();
     physic.collisionsEquipeTerrain();
@@ -124,8 +153,8 @@ int main() {
 
     terrain.render(renderer);
     ballon.render(renderer);
-    equipe1.render(renderer);
-    equipe2.render(renderer);
+    equipeLeft.render(renderer);
+    equipeRight.render(renderer);
 
     renderer.display();
     }

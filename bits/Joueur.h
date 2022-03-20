@@ -21,6 +21,8 @@ class Joueur : public gf::Entity{
     public:
         Joueur(int poste, int style, gf::ResourceManager& resources, bool sens);
 
+        void engagement();
+
         void setPosition(gf::Vector2f);
         void setPosition(float posX, float posY);
         void setPositionY(float posY);
@@ -51,8 +53,11 @@ class Joueur : public gf::Entity{
         void setCurrent();
         void removeCurrent();
         bool approxAngle(float value, float test, float ampitude);
+
         const gf::Texture *texture;
+        
         bool sens;
+        float angle;
 
         enum class Style{
             Recule,

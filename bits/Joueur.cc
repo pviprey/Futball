@@ -9,58 +9,55 @@
 
 #include <iostream>
 
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):
-    texture(&resources.getTexture("Players/characterBlue (1).png")),
-    sens(sens){
-        this->marche = false;
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens)
+:texture(&resources.getTexture("Players/characterBlue (1).png")),
+sens(sens){
+    switch(poste){
+        case 0:
+            this->poste = Poste::Gardien;
+        break;
 
-        switch(poste){
-            case 0:
-                this->poste = Poste::Gardien;
-                if(sens){
-                    hitbox.center.x = 13 * -64;
-                }else{
-                    hitbox.center.x = 13 * 64;
-                }
-                break;
-            case 1:
-                this->poste = Poste::Defenseur;
-                if(sens){
-                    hitbox.center.x = 9 * -64;
-                }else{
-                    hitbox.center.x = 9 * 64;
-                }
-                break;
-            case 2:
-                this->poste = Poste::Attaquant;
-                if(sens){
-                    hitbox.center.x = 3 * -64;
-                }else{
-                    hitbox.center.x = 3 * 64;
-                }
-                break;
-        }
+        case 1:
+            this->poste = Poste::Defenseur;
+        break;
 
-        switch(style){
-            case 0:
-                this->style = Style::Recule;
-                hitbox.center.x -= hitbox.center.x*0.1;
-                break;
-            case 1:
-                this->style = Style::Normal;
-                break;
-            case 2:
-                this->style = Style::Avance;
-                hitbox.center.x += hitbox.center.x*0.1;
-                break;
-        }
+        case 2:
+            this->poste = Poste::Attaquant;
+        break;
+    }
 
-        this->velocite = {0,0};
+    switch(style){
+        case 0:
+            this->style = Style::Recule;
+            //hitbox.center.x -= hitbox.center.x*0.1;
+        break;
 
-        this->hitbox.radius = 11.0f;
+        case 1:
+            this->style = Style::Normal;
+        break;
 
-        this->current = false;
-        this->interacting = false;
+        case 2:
+            this->style = Style::Avance;
+            //hitbox.center.x += hitbox.center.x*0.1;
+        break;
+    }
+
+    hitbox.radius = 11.0f;
+
+    engagement();
+}
+
+void Joueur::engagement(){
+    marche = false;
+    velocite = {0,0};
+    current = false;
+    interacting = false;
+
+    if(sens){
+        angle = 0;
+    }else{
+        angle = gf::Pi;
+    }
 }
 
 void Joueur::setPosition(gf::Vector2f position){
@@ -103,11 +100,12 @@ gf::CircF Joueur::getHitbox() const {
 }
 
 void Joueur::deplacement(gf::Vector2f arrivee){
-    assert(!current);
+    //assert(!current);
 
-    float angle = gf::angle(hitbox.center - arrivee);
-    std::cout << "angle:" << angle << std::endl;
-    std::cout << "posX:";
+    float angle = gf::radiansToDegrees(gf::angle(hitbox.center - arrivee));
+    std::cout << "angle: " << angle << std::endl;
+
+    /*
     if(abs(hitbox.center.x - arrivee.x) > 0.1 || abs(hitbox.center.y - arrivee.y) > 0.1){
         if(approxAngle(angle, 0, 45/2)){    //transformer les angles en radiant CONNARD
             velocite.x = 1;
@@ -138,6 +136,7 @@ void Joueur::deplacement(gf::Vector2f arrivee){
             velocite.y = -1;
         }
     }
+    */
 }
 
 bool Joueur::approxAngle(float value, float test, float amplitude){
@@ -150,27 +149,61 @@ void Joueur::deplacement(gf::Event event){
             case gf::EventType::KeyPressed:     //touche appuyé
                 switch (event.key.keycode){
                     case gf::Keycode::Up:       //monter
-                    case gf::Keycode::Z:
-                        velocite.y = -1;
+                        if(!sens){
+                            velocite.y = -1;
+                        }
                     break;
+                    case gf::Keycode::Z:
+                        if(sens){
+                            velocite.y = -1;
+                        }
+                    break;
+
 
                     case gf::Keycode::Down:     //descendre
-                    case gf::Keycode::S:
-                        velocite.y = 1;
+                        if(!sens){
+                            velocite.y = 1;
+                        }
                     break;
+                    case gf::Keycode::S:
+                        if(sens){
+                            velocite.y = 1;
+                        }
+                    break;
+
 
                     case gf::Keycode::Left:     //gauche
-                    case gf::Keycode::Q:
-                        velocite.x = -1;
+                        if(!sens){
+                            velocite.x = -1;
+                        }
                     break;
+                    case gf::Keycode::Q:
+                        if(sens){
+                            velocite.x = -1;
+                        }
+                    break;
+
 
                     case gf::Keycode::Right:    //droite
+                        if(!sens){
+                            velocite.x = 1;
+                        }
+                    break;                        
                     case gf::Keycode::D:
-                        velocite.x = 1;
+                        if(sens){
+                            velocite.x = 1;
+                        }
                     break;
 
+                    case gf::Keycode::RightAlt:     //marcher
+                        if(!sens){
+                            marche = true;
+                        }
+                    break;
                     case gf::Keycode::LeftShift:
-                        marche = true;
+                        if(sens){
+                            marche = true;
+                        }
                     break;
 
                     default:
@@ -182,27 +215,61 @@ void Joueur::deplacement(gf::Event event){
             case gf::EventType::KeyReleased:     //touche relaché
                 switch (event.key.keycode){
                     case gf::Keycode::Up:       //monter
-                    case gf::Keycode::Z:
-                        velocite.y = 0;
+                        if(!sens){
+                            velocite.y = 0;
+                        }
                     break;
+                    case gf::Keycode::Z:
+                        if(sens){
+                            velocite.y = 0;
+                        }
+                    break;
+
 
                     case gf::Keycode::Down:     //descendre
-                    case gf::Keycode::S:
-                        velocite.y = 0;
+                        if(!sens){
+                            velocite.y = 0;
+                        }                    
                     break;
+                    case gf::Keycode::S:
+                        if(sens){
+                            velocite.y = 0;
+                        }
+                    break;
+
 
                     case gf::Keycode::Left:     //gauche
-                    case gf::Keycode::Q:
-                        velocite.x = 0;
+                        if(!sens){
+                            velocite.x = 0;
+                        }                    
                     break;
+                    case gf::Keycode::Q:
+                        if(sens){
+                            velocite.x = 0;
+                        }
+                    break;
+
 
                     case gf::Keycode::Right:    //droite
+                        if(!sens){
+                            velocite.x = 0;
+                        }                    
+                    break;
                     case gf::Keycode::D:
-                        velocite.x = 0;
+                        if(sens){
+                            velocite.x = 0;
+                        }
                     break;
 
+                    case gf::Keycode::RightAlt:     //marcher
+                        if(!sens){
+                            marche = false;
+                        }
+                    break;
                     case gf::Keycode::LeftShift:
-                        marche = false;
+                        if(sens){
+                            marche = false;
+                        }
                     break;
 
                     default:
@@ -241,11 +308,11 @@ void Joueur::render(gf::RenderTarget& target){
     shape.setScale(1.3);
     shape.setPosition(hitbox.center);
     shape.setAnchor(gf::Anchor::Center);
-    if(sens){
-        shape.setRotation(gf::angle(velocite));
-    }else{
-        shape.setRotation(gf::angle(-velocite));
+    
+    if(velocite.x != 0 || velocite.y != 0){
+        angle = gf::angle(velocite);
     }
+    shape.setRotation(angle);
 
     target.draw(shape);
 

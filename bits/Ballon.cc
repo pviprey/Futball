@@ -12,15 +12,19 @@ namespace{
     static constexpr float BALLON_ACCELERATION = -300.0f;
 }
 
-Ballon::Ballon(gf::ResourceManager& resources):
-    texture(resources.getTexture("Ball/ball_soccer4.png")),
-    norm(0.0f),
-    velocite({0, 0}),
-    pushed(false),
-    marche(false),
-    depth_marche(0){
-        hitbox.center = {0, 0};
-        hitbox.radius = 8.0f;
+Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Ball/ball_soccer4.png")){
+    engagement();
+}
+
+void Ballon::engagement(){
+    norm = 0.0f;
+    velocite = {0, 0};
+    pushed = false;
+    marche = false;
+    depth_marche = 0;
+
+    hitbox.center = {0, 0};
+    hitbox.radius = 8.0f;
 }
 
 gf::CircF Ballon::getHitbox() const {
@@ -63,7 +67,6 @@ void Ballon::interact(gf::Penetration penetration, gf::Vector2f deplacement, boo
 
 void Ballon::interact(gf::Penetration penetration){
     hitbox.center -= penetration.depth * penetration.normal;
-    //velocite = penetration.normal;
 }
 
 void Ballon::render(gf::RenderTarget& target){

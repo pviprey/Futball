@@ -12,7 +12,14 @@ void Physics::collisionEquipeEquipe(){
                 joueurs1[i].interact(penetration);
             }
         }
+
+        for(size_t j = 0; j < joueurs2.size(); j++){
+            if(gf::collides(joueurs1[i].getHitbox(), joueurs2[j].getHitbox(), penetration)){
+                joueurs1[i].interact(penetration);
+            }
+        }        
     }
+
 
     for(size_t i = 0; i < joueurs2.size(); i++){
         for(size_t j = i+1; j < joueurs2.size(); j++){
@@ -20,7 +27,13 @@ void Physics::collisionEquipeEquipe(){
                 joueurs2[i].interact(penetration);
             }
         }
-    }
+
+        for(size_t j = 0; j < joueurs1.size(); j++){
+            if(gf::collides(joueurs2[i].getHitbox(), joueurs1[j].getHitbox(), penetration)){
+                joueurs2[i].interact(penetration);
+            }
+        }        
+    }   
 }
 
 void Physics::collisionsEquipeTerrain(){
@@ -71,6 +84,18 @@ void Physics::collisionsBallonTerrain(){
             ballon.interact(penetration);
         }
     }
+}
+
+bool Physics::ballInLeftGoal(){
+    gf::Penetration penetration;
+
+    return gf::collides(ballon.getHitbox(), terrain.getLeftGoal(), penetration);
+}
+
+bool Physics::ballInRightGoal(){
+    gf::Penetration penetration;
+
+    return gf::collides(ballon.getHitbox(), terrain.getRightGoal(), penetration);
 }
 
 void Physics::getClosest(){

@@ -21,6 +21,8 @@ class Equipe{
 
         bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
+        void engagement(bool possession);
+
         std::vector<Joueur>& getJoueurs();
         void switchCurrentToClosest(Ballon& ballon);
 

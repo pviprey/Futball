@@ -20,23 +20,21 @@ bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources){
     return addJoueur(Joueur(poste, style, resources, sens));
 }
 
-bool Equipe::addJoueur(const Joueur& joueur){
-    if(composition.size() == TAILLE_EQUIPE){
-        return false;
+void Equipe::engagement(bool possession){
+    disposition();
+
+    for(auto &joueur : composition){
+        joueur.engagement();
     }
 
-    if(joueur.getPoste() == Joueur::Poste::Gardien){
-        if(hasGoal()){
-            return false;
+    if(possession){
+        for(auto &joueur : composition){
+            if(joueur.getPoste() == Joueur::Poste:: Attaquant){
+                joueur.setPosition(0, 35);
+                break;
+            }
         }
-    }
-
-    composition.push_back(joueur);
-    if(composition.size() == TAILLE_EQUIPE){
-        disposition();
-    }
-
-    return true;
+    }    
 }
 
 std::vector<Joueur>& Equipe::getJoueurs(){
@@ -101,7 +99,7 @@ void Equipe::isDefending(Ballon& ballon, Terrain& terrain){
                     }
                 }else{
                     if(ballon.getPushed()){
-                        std::cout << "DEBUG:" << terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15 << std::endl;
+                        // std::cout << "DEBUG:" << terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15 << std::endl;
                         joueur.deplacement(gf::Vector2f{
                             terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15,
                             tan(gf::angle(terrain.getRightGoal().getCenter() - ballon.getHitbox().center)) * (terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x - 15)
@@ -121,6 +119,31 @@ void Equipe::isDefending(Ballon& ballon, Terrain& terrain){
     }
 }
 
+
+
+/**
+ * private section
+ */
+
+bool Equipe::addJoueur(const Joueur& joueur){
+    if(composition.size() == TAILLE_EQUIPE){
+        return false;
+    }
+
+    if(joueur.getPoste() == Joueur::Poste::Gardien){
+        if(hasGoal()){
+            return false;
+        }
+    }
+
+    composition.push_back(joueur);
+    if(composition.size() == TAILLE_EQUIPE){
+        disposition();
+    }
+
+    return true;
+}
+
 bool Equipe::hasGoal(){
     for(auto & joueur : composition){
         if(joueur.getPoste() == Joueur::Poste::Gardien){
@@ -135,7 +158,6 @@ bool Equipe::hasGoal(){
 void Equipe::disposition(){
     int nbDefenseur = 0;
     int nbAttaquant = 0;
-
     for(auto & joueur : composition){
         switch(joueur.getPoste()){
             case Joueur::Poste::Gardien:
@@ -152,22 +174,33 @@ void Equipe::disposition(){
         }
     }
 
-
-
     int countAtk = 1;
     int countDef = 1;
     for(auto& joueur : composition){
         switch(joueur.getPoste()){
             case Joueur::Poste::Gardien:
+                if(sens){
+                    joueur.setPosition(13 * -64, 0);
+                }else{
+                    joueur.setPosition(13 * 64, 0);
+                }
             break;
 
             case Joueur::Poste::Defenseur:
-                joueur.setPositionY(((64*(GROUND_HEIGH)/(nbDefenseur+1))*countDef)-GROUND_HEIGH*64/2);
+                if(sens){
+                    joueur.setPosition(9 * -64, ((64*(GROUND_HEIGH)/(nbDefenseur+1))*countDef)-GROUND_HEIGH*64/2);
+                }else{
+                    joueur.setPosition(9 * 64, ((64*(GROUND_HEIGH)/(nbDefenseur+1))*countDef)-GROUND_HEIGH*64/2);
+                }
                 countDef++;
             break;
 
             case Joueur::Poste::Attaquant:
-                joueur.setPositionY(((64*(GROUND_HEIGH)/(nbAttaquant+1))*countAtk)-GROUND_HEIGH*64/2);
+                if(sens){
+                    joueur.setPosition(3 * -64, ((64*(GROUND_HEIGH)/(nbAttaquant+1))*countAtk)-GROUND_HEIGH*64/2);
+                }else{
+                    joueur.setPosition(3 * 64, ((64*(GROUND_HEIGH)/(nbAttaquant+1))*countAtk)-GROUND_HEIGH*64/2);
+                }
                 countAtk++;
             break;
         }        

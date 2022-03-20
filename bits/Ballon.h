@@ -15,6 +15,8 @@ class Ballon : public gf::Entity{
     public:
         Ballon(gf::ResourceManager& resources);
 
+        void engagement();
+
         gf::CircF getHitbox() const;
         bool getPushed() const;
 

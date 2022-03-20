@@ -29,6 +29,9 @@ class Physics {
         void collisionBallonEquipe();
         void collisionsBallonTerrain();
 
+        bool ballInLeftGoal();
+        bool ballInRightGoal();
+
         void getClosest();
     private:
         Ballon& ballon;
