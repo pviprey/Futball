@@ -13,7 +13,6 @@
 #include <gf/Time.h>
 
 #include "Game.h"
-//#include "bits/Terrain.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
 #include "bits/Physics.h"
@@ -36,6 +35,8 @@ int main() {
     gf::ExtendView view(gf::vec(0, 0), gf::vec(GROUND_LENGTH, GROUND_HEIGH) * 70.0f);
     views.addView(view);
     view.setInitialFramebufferSize({ 1024, 768 });
+
+    gf::Text score;
 
     /*(ref 2. update)*/
     gf::Clock clock;

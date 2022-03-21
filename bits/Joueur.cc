@@ -9,9 +9,12 @@
 
 #include <iostream>
 
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens)
-:texture(&resources.getTexture("Players/characterBlue (1).png")),
-sens(sens){
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):sens(sens){
+    if(sens){
+        texture = &resources.getTexture("Players/characterBlue (1).png");
+    }else{
+        texture = &resources.getTexture("Players/characterRed (1).png");
+    }
     switch(poste){
         case 0:
             this->poste = Poste::Gardien;
