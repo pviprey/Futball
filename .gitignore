@@ -1,3 +1,4 @@
 /.vscode
 /build
-PROJET*.txt
+/rapport/*.txt
+/rapport/.~lock*
