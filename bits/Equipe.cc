@@ -30,7 +30,7 @@ void Equipe::engagement(bool possession){
     if(possession){
         for(auto &joueur : composition){
             if(joueur.getPoste() == Joueur::Poste:: Attaquant){
-                joueur.setPosition(0, 35);
+                joueur.setPosition(0, -35);
                 break;
             }
         }
@@ -156,12 +156,13 @@ bool Equipe::hasGoal(){
 
 
 void Equipe::disposition(){
+    int nbGardien = 0;
     int nbDefenseur = 0;
     int nbAttaquant = 0;
     for(auto & joueur : composition){
         switch(joueur.getPoste()){
             case Joueur::Poste::Gardien:
-                joueur.setPositionY(0);
+                nbGardien++;
             break;
 
             case Joueur::Poste::Defenseur:
@@ -172,6 +173,11 @@ void Equipe::disposition(){
                 nbAttaquant++;
             break;
         }
+    }
+
+    if(nbGardien != 1 || nbDefenseur == 0 || nbAttaquant == 0){
+        std::cerr << "ERROR: A team needs exactly 1 Goal and at least 1 Defense and 1 Attack" << std::endl;
+        exit(0);
     }
 
     int countAtk = 1;

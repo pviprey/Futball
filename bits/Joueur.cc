@@ -103,7 +103,6 @@ gf::CircF Joueur::getHitbox() const {
 }
 
 void Joueur::deplacement(gf::Vector2f arrivee){
-    //assert(!current);
 
     float angle = gf::radiansToDegrees(gf::angle(hitbox.center - arrivee));
     std::cout << "angle: " << angle << std::endl;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 #include <gf/Event.h>
 #include <gf/Font.h>
@@ -17,10 +18,6 @@
 #include "bits/Equipe.h"
 #include "bits/Physics.h"
 
-namespace{
-    int scoreLeft = 0;
-    int scoreRight = 0;
-}
 
 int main() {
     // Create the main window and the renderer
@@ -37,6 +34,8 @@ int main() {
     view.setInitialFramebufferSize({ 1024, 768 });
 
     gf::Text score;
+    int scoreLeft = 0;
+    int scoreRight = 0;
 
     /*(ref 2. update)*/
     gf::Clock clock;
@@ -79,36 +78,11 @@ int main() {
             equipeLeft.deplacement(event);
             equipeRight.deplacement(event);
 
-
-            if(physic.ballInLeftGoal()){
-                scoreRight++;
-                equipeLeft.engagement(true);
-                equipeRight.engagement(false);
-                ballon.engagement();
-
-                equipeLeft.switchCurrentToClosest(ballon);
-                equipeRight.switchCurrentToClosest(ballon);
-
-                std::cout << "Équipe Gauche: " << scoreRight << "\tÉquipe droite: " << scoreLeft << std::endl;
-            }
-
-            if(physic.ballInRightGoal()){
-                scoreLeft++;
-                equipeLeft.engagement(false);
-                equipeRight.engagement(true);
-                ballon.engagement();
-
-                equipeLeft.switchCurrentToClosest(ballon);
-                equipeRight.switchCurrentToClosest(ballon);
-
-                std::cout << "Équipe Gauche: " << scoreRight << "\tÉquipe droite: " << scoreLeft << std::endl;
-            }
-
             switch (event.type){
                 case gf::EventType::Closed: //fermeture de la fenetre
                     window.close();
                 break;
-                
+
                 case gf::EventType::KeyPressed:     //touche appuyé
                     switch (event.key.keycode){
                         case gf::Keycode::Escape:
@@ -137,29 +111,54 @@ int main() {
             views.processEvent(event);
         }
 
-    // 2. update 60 fois MINIMUM
-    gf::Time ips = clock.restart();
-    //std::printf("%g\n", 1/ips.asSeconds());
-    equipeLeft.update(ips);
-    equipeRight.update(ips);
+        // 2. update 60 fois MINIMUM
 
-    physic.collisionEquipeEquipe();
-    physic.collisionsEquipeTerrain();
-    physic.collisionBallonEquipe();
-    physic.collisionsBallonTerrain();
-    
-    ballon.update(ips);
+        if(physic.ballInLeftGoal()){
+            scoreRight++;
+            equipeLeft.engagement(true);
+            equipeRight.engagement(false);
+            ballon.engagement();
 
-    // Draw the entities
-    renderer.setView(view);
-    renderer.clear();
+            equipeLeft.switchCurrentToClosest(ballon);
+            equipeRight.switchCurrentToClosest(ballon);
 
-    terrain.render(renderer);
-    ballon.render(renderer);
-    equipeLeft.render(renderer);
-    equipeRight.render(renderer);
+            std::cout << "Équipe Gauche: " << scoreLeft << "\tÉquipe droite: " << scoreRight << std::endl;
+        }
 
-    renderer.display();
+        if(physic.ballInRightGoal()){
+            scoreLeft++;
+            equipeLeft.engagement(false);
+            equipeRight.engagement(true);
+            ballon.engagement();
+
+            equipeLeft.switchCurrentToClosest(ballon);
+            equipeRight.switchCurrentToClosest(ballon);
+
+            std::cout << "Équipe Gauche: " << scoreLeft << "\tÉquipe droite: " << scoreRight << std::endl;
+        }
+
+        gf::Time ips = clock.restart();
+        //std::printf("%g\n", 1/ips.asSeconds());
+        equipeLeft.update(ips);
+        equipeRight.update(ips);
+
+        physic.collisionEquipeEquipe();
+        physic.collisionsEquipeTerrain();
+        physic.collisionBallonEquipe();
+        physic.collisionsBallonTerrain();
+        
+        ballon.update(ips);
+
+        // Draw the entities
+        renderer.setView(view);
+        renderer.clear();
+
+        terrain.render(renderer);
+        ballon.render(renderer);
+        equipeLeft.render(renderer);
+        equipeRight.render(renderer);
+
+        renderer.display();
     }
 
     return 0;
