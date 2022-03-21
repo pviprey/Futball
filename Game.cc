@@ -88,7 +88,7 @@ int main() {
                 equipeLeft.switchCurrentToClosest(ballon);
                 equipeRight.switchCurrentToClosest(ballon);
 
-                std::cout << "Équipe Gauche: " << scoreRight << "Équipe droite: " << scoreLeft << std::endl;
+                std::cout << "Équipe Gauche: " << scoreRight << "\tÉquipe droite: " << scoreLeft << std::endl;
             }
 
             if(physic.ballInRightGoal()){
@@ -98,7 +98,9 @@ int main() {
                 ballon.engagement();
 
                 equipeLeft.switchCurrentToClosest(ballon);
-                equipeRight.switchCurrentToClosest(ballon);                
+                equipeRight.switchCurrentToClosest(ballon);
+
+                std::cout << "Équipe Gauche: " << scoreRight << "\tÉquipe droite: " << scoreLeft << std::endl;
             }
 
             switch (event.type){
