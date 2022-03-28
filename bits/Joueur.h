@@ -61,7 +61,6 @@ class Joueur : public gf::Entity{
         bool sens;
         float angle;
 
-
         Poste poste;  //0: gardien, 1: defenseur, 2: attaquant
         Style style;  //0: reculé, 1: normal, 2:avancé
 

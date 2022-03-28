@@ -23,7 +23,7 @@ int main() {
     // Create the main window and the renderer
     gf::Window window("Futsall", { 1024, 768 });
     window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);    
+    window.setFramerateLimit(60);
     gf::RenderWindow renderer(window);
     window.setFullscreen();
 
@@ -72,7 +72,6 @@ int main() {
     // Start the game loop 
     while (window.isOpen()){
 
-        std::cout << "time elapsed: " << chronometre.getElapsedTime().asSeconds() << std::endl;
         if(chronometre.getElapsedTime().asSeconds() > 5*60){
             window.close();
         }
@@ -112,13 +111,22 @@ int main() {
                 break;
             }
 
-            equipeRight.isDefending(ballon, terrain);
+            //equipeRight.isDefending(ballon, terrain);
 
             views.processEvent(event);
         }
 
         // 2. update 60 fois MINIMUM
+        gf::Time ips = clock.restart();
+        std::printf("%g\n", 1/ips.asSeconds());
+        equipeLeft.update(ips);
+        equipeRight.update(ips);
 
+        physic.collisionEquipeEquipe();
+        physic.collisionsEquipeTerrain();
+        physic.collisionBallonEquipe();
+        physic.collisionsBallonTerrain();
+        
         if(physic.ballInLeftGoal()){
             scoreRight++;
             equipeLeft.engagement(true);
@@ -143,19 +151,9 @@ int main() {
             std::cout << "Équipe Gauche: " << scoreLeft << "\tÉquipe droite: " << scoreRight << std::endl;
         }
 
-        gf::Time ips = clock.restart();
-        //std::printf("%g\n", 1/ips.asSeconds());
-        equipeLeft.update(ips);
-        equipeRight.update(ips);
-
-        physic.collisionEquipeEquipe();
-        physic.collisionsEquipeTerrain();
-        physic.collisionBallonEquipe();
-        physic.collisionsBallonTerrain();
-        
         ballon.update(ips);
 
-        // Draw the entities
+        // 3. Draw the entities
         renderer.setView(view);
         renderer.clear();
 

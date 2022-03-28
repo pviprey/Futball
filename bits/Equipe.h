@@ -31,7 +31,7 @@ class Equipe{
         void render(gf::RenderTarget& target);
 
         void isDefending(Ballon& ballon, Terrain& terrain);
-        void isAttacking();
+        void isAttacking(Ballon& ballon, Terrain& terrain);
     private:
         std::vector<Joueur> composition;
         bool sens;
