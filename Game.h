@@ -13,7 +13,6 @@ class Game {
     public:
         Game(const gf::TextureAtlas& atlas);
     private:
-        Terrain terrain;
 
 };
 

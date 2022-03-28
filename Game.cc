@@ -13,7 +13,7 @@
 #include <gf/Views.h>
 #include <gf/Time.h>
 
-#include "Game.h"
+//#include "Game.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
 #include "bits/Physics.h"
@@ -70,6 +70,10 @@ int main() {
 
     // Start the game loop 
     while (window.isOpen()){
+
+        if(clock.getElapsedTime().asSeconds() > 10){
+            window.close();
+        }
         // Process events
         gf::Event event;
 
