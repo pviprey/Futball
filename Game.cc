@@ -13,6 +13,7 @@
 #include <gf/Views.h>
 #include <gf/Time.h>
 
+#include "bits/Terrain.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
 #include "bits/Physics.h"

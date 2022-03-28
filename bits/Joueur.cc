@@ -332,6 +332,7 @@ void Joueur::render(gf::RenderTarget& target){
     }
 
     //debug
+    /*
     gf::CircleShape hitboxShape;
     hitboxShape.setRadius(hitbox.getRadius());
     hitboxShape.setPosition(hitbox.getCenter());
@@ -340,6 +341,7 @@ void Joueur::render(gf::RenderTarget& target){
     hitboxShape.setOutlineThickness(1.0f);
     hitboxShape.setAnchor(gf::Anchor::Center);
     target.draw(hitboxShape);
+    */
 }
 
 void Joueur::setCurrent(){

@@ -96,6 +96,8 @@ void Equipe::isDefending(Ballon& ballon, Terrain& terrain){
                 if(sens){
                     if(ballon.getPushed()){
                         //joueur.deplacement(gf::Vector2f{terrain.getLeftGoal().getCenter().x + terrain.getLeftGoal().getSize().x/2 + 15, ballon.getHitbox().center.y - terrain.getLeftGoal().getCenter().y});
+                    }else{
+
                     }
                 }else{
                     if(ballon.getPushed()){
@@ -104,7 +106,9 @@ void Equipe::isDefending(Ballon& ballon, Terrain& terrain){
                             terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x/2 - 15,
                             tan(gf::angle(terrain.getRightGoal().getCenter() - ballon.getHitbox().center)) * (terrain.getRightGoal().getCenter().x - terrain.getRightGoal().getSize().x - 15)
                         });
-                    }                    
+                    }else{
+                        
+                    }
                 }
             break;
 
