@@ -32,7 +32,6 @@ Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):
     switch(style){
         case 0:
             this->style = Style::Recule;
-            //hitbox.center.x -= hitbox.center.x*0.1;
         break;
 
         case 1:
@@ -41,7 +40,6 @@ Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):
 
         case 2:
             this->style = Style::Avance;
-            //hitbox.center.x += hitbox.center.x*0.1;
         break;
     }
 
@@ -71,10 +69,6 @@ void Joueur::setPosition(float posX, float posY){
     setPosition({posX, posY});
 }
 
-void Joueur::setPositionY(float posY){
-    setPosition({this->hitbox.center.x, posY});
-}
-
 bool Joueur::getMarche(){
     return marche;
 }
@@ -87,19 +81,23 @@ bool Joueur::getCurrent(){
     return current;
 }
 
+Joueur::Poste Joueur::getPoste() const {
+    return poste;
+}
+
+Joueur::Style Joueur::getStyle() const {
+    return style;
+}
+
+gf::CircF Joueur::getHitbox() const {
+    return hitbox;
+}
+
 void Joueur::switchCurrentTo(Joueur& joueur){
     velocite = {0.0f, 0.0f};
 
     removeCurrent();
     joueur.setCurrent();
-}
-
-Joueur::Poste Joueur::getPoste() const {
-    return poste;
-}
-
-gf::CircF Joueur::getHitbox() const {
-    return hitbox;
 }
 
 void Joueur::deplacement(gf::Vector2f arrivee){

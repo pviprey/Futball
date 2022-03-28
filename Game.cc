@@ -13,7 +13,6 @@
 #include <gf/Views.h>
 #include <gf/Time.h>
 
-//#include "Game.h"
 #include "bits/Ballon.h"
 #include "bits/Equipe.h"
 #include "bits/Physics.h"
@@ -39,6 +38,7 @@ int main() {
 
     /*(ref 2. update)*/
     gf::Clock clock;
+    gf::Clock chronometre;
     renderer.clear(gf::Color::Black); //nettoyer l'écran avant de commencer
 
     gf::ResourceManager resources;
@@ -52,18 +52,18 @@ int main() {
 
     Equipe equipeLeft = Equipe(true);
     equipeLeft.addJoueur(0, 1, resources);
+    equipeLeft.addJoueur(1, 2, resources);
     equipeLeft.addJoueur(1, 1, resources);
-    equipeLeft.addJoueur(1, 1, resources);
-    equipeLeft.addJoueur(1, 1, resources);
-    equipeLeft.addJoueur(2, 1, resources);
+    equipeLeft.addJoueur(1, 2, resources);
+    equipeLeft.addJoueur(2, 2, resources);
     equipeLeft.switchCurrentToClosest(ballon);
 
     Equipe equipeRight = Equipe(false);
-    equipeRight.addJoueur(0, 1, resources);
+    equipeRight.addJoueur(0, 0, resources);
     equipeRight.addJoueur(1, 1, resources);
+    equipeRight.addJoueur(1, 2, resources);
     equipeRight.addJoueur(1, 1, resources);
-    equipeRight.addJoueur(1, 1, resources);
-    equipeRight.addJoueur(2, 1, resources);
+    equipeRight.addJoueur(2, 2, resources);
     equipeRight.switchCurrentToClosest(ballon);
 
     Physics physic(ballon, equipeLeft, equipeRight, terrain);
@@ -71,7 +71,8 @@ int main() {
     // Start the game loop 
     while (window.isOpen()){
 
-        if(clock.getElapsedTime().asSeconds() > 10){
+        std::cout << "time elapsed: " << chronometre.getElapsedTime().asSeconds() << std::endl;
+        if(chronometre.getElapsedTime().asSeconds() > 5*60){
             window.close();
         }
         // Process events

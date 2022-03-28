@@ -186,9 +186,9 @@ void Equipe::disposition(){
         switch(joueur.getPoste()){
             case Joueur::Poste::Gardien:
                 if(sens){
-                    joueur.setPosition(13 * -64, 0);
+                    joueur.setPosition(12.4 * -64, 0);
                 }else{
-                    joueur.setPosition(13 * 64, 0);
+                    joueur.setPosition(12.4 * 64, 0);
                 }
             break;
 
@@ -209,6 +209,28 @@ void Equipe::disposition(){
                 }
                 countAtk++;
             break;
-        }        
+        }
+
+        gf::Vector2f position = joueur.getHitbox().center;
+        switch(joueur.getStyle()){
+            case Joueur::Style::Recule:
+                if(sens){
+                    joueur.setPosition(position.x - 0.7*64, position.y);
+                }else{
+                    joueur.setPosition(position.x + 0.7*64, position.y);
+                }
+            break;
+
+            case Joueur::Style::Normal:
+            break;
+
+            case Joueur::Style::Avance:
+                if(sens){
+                    joueur.setPosition(position.x + 0.7*64, position.y);
+                }else{
+                    joueur.setPosition(position.x - 0.7*64, position.y);
+                }
+            break;            
+        }
     }
 }
