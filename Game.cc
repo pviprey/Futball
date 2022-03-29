@@ -69,6 +69,9 @@ int main() {
 
     Physics physic(ballon, equipeLeft, equipeRight, terrain);
 
+    gf::Text chronoText;
+    gf::Text scoreLeftText, scoreRightText;
+
     // Start the game loop 
     while (window.isOpen()){
 
@@ -118,7 +121,6 @@ int main() {
 
         // 2. update 60 fois MINIMUM
         gf::Time ips = clock.restart();
-        std::printf("%g\n", 1/ips.asSeconds());
         equipeLeft.update(ips);
         equipeRight.update(ips);
 
@@ -150,6 +152,10 @@ int main() {
 
             std::cout << "Équipe Gauche: " << scoreLeft << "\tÉquipe droite: " << scoreRight << std::endl;
         }
+
+        chronoText.setString(std::to_string(chronometre.getElapsedTime().asSeconds()));
+        scoreLeftText.setString(std::to_string(scoreLeft));
+        scoreRightText.setString(std::to_string(scoreRight));
 
         ballon.update(ips);
 

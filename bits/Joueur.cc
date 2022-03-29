@@ -321,9 +321,9 @@ void Joueur::render(gf::RenderTarget& target){
         circleShape.setRadius(20.0f);
         circleShape.setColor(gf::Color::Transparent);
         if(sens){
-            circleShape.setOutlineColor(gf::Color::Red);
-        }else{
             circleShape.setOutlineColor(gf::Color::Blue);
+        }else{
+            circleShape.setOutlineColor(gf::Color::Red);
         }
         circleShape.setOutlineThickness(3.0f);
         circleShape.setPosition(hitbox.center);
