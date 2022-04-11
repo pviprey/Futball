@@ -339,7 +339,7 @@ void Terrain::render(gf::RenderTarget& target) {
         target.draw(sprite);
 
         //debug
-        /*
+        
         gf::RectangleShape hitboxShapeTop;
         hitboxShapeTop.setPosition(hitboxTop.getCenter());
         hitboxShapeTop.setSize(hitboxTop.getSize());
@@ -411,6 +411,6 @@ void Terrain::render(gf::RenderTarget& target) {
         hitboxShapeGoalRight.setOutlineThickness(1.5f);
         hitboxShapeGoalRight.setAnchor(gf::Anchor::Center);
         target.draw(hitboxShapeGoalRight);
-        */
+        
     }    
 }

@@ -83,8 +83,8 @@ void Ballon::render(gf::RenderTarget& target){
     hitboxShape.setRadius(hitbox.getRadius());
     hitboxShape.setPosition(hitbox.getCenter());
     hitboxShape.setColor(gf::Color::Transparent);
-    hitboxShape.setOutlineColor(gf::Color::Blue);
-    hitboxShape.setOutlineThickness(1.0f);
+    hitboxShape.setOutlineColor(gf::Color::Green);
+    hitboxShape.setOutlineThickness(3.0f);
     hitboxShape.setAnchor(gf::Anchor::Center);
     target.draw(hitboxShape);    
 }
