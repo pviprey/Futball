@@ -2,3 +2,6 @@
 /build
 /rapport/*.txt
 /rapport/.~lock*
+/rapport/*.png
+/rapport/*.odt
+/rapport/*.odp
