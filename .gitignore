@@ -3,5 +3,6 @@
 /rapport/*.txt
 /rapport/.~lock*
 /rapport/*.png
+/rapport/*.jpg
 /rapport/*.odt
 /rapport/*.odp
