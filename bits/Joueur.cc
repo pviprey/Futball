@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens):sens(sens){
+Joueur::Joueur(int poste, int style, gf::ResourceManager& resources, bool sens, bool debug):sens(sens), debug(debug){
     if(sens){
         texture = &resources.getTexture("Players/characterBlue (1).png");
     }else{
@@ -332,16 +332,16 @@ void Joueur::render(gf::RenderTarget& target){
     }
 
     //debug
-    
-    gf::CircleShape hitboxShape;
-    hitboxShape.setRadius(hitbox.getRadius());
-    hitboxShape.setPosition(hitbox.getCenter());
-    hitboxShape.setColor(gf::Color::Transparent);
-    hitboxShape.setOutlineColor(gf::Color::Green);
-    hitboxShape.setOutlineThickness(3.0f);
-    hitboxShape.setAnchor(gf::Anchor::Center);
-    target.draw(hitboxShape);
-    
+    if(debug){
+        gf::CircleShape hitboxShape;
+        hitboxShape.setRadius(hitbox.getRadius());
+        hitboxShape.setPosition(hitbox.getCenter());
+        hitboxShape.setColor(gf::Color::Transparent);
+        hitboxShape.setOutlineColor(gf::Color::Green);
+        hitboxShape.setOutlineThickness(3.0f);
+        hitboxShape.setAnchor(gf::Anchor::Center);
+        target.draw(hitboxShape);
+    }
 }
 
 void Joueur::setCurrent(){

@@ -28,7 +28,7 @@ namespace{
     constexpr gf::Vector2f SpriteSize(64.0f, 64.0f);
 }
 
-Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):gf::Entity(1),
+Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources, bool debug):gf::Entity(1),
     hitboxTop(gf::RectF::fromPositionSize(gf::Vector2f{-GROUND_LENGTH*64/2, -GROUND_HEIGH*64/2-15}, gf::Vector2f{GROUND_LENGTH*64, 22})),
     hitboxLeftTop(gf::RectF::fromPositionSize(gf::Vector2f{-GROUND_LENGTH*64/2, -GROUND_HEIGH*64/2-15}, gf::Vector2f{70, (GROUND_HEIGH-8)*64+47})),
     hitboxRightTop(gf::RectF::fromPositionSize(gf::Vector2f{GROUND_LENGTH*64/2-70, -GROUND_HEIGH*64/2-15}, gf::Vector2f{70, (GROUND_HEIGH-8)*64+47})),
@@ -80,7 +80,9 @@ Terrain::Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources):
     NetRight(resources.getTexture("Elements/Right_Net.png")),
     NetBottomRight(resources.getTexture("Elements/BottomRight_Net.png")),
     
-    tiles(TERRAINSIZE)
+    tiles(TERRAINSIZE),
+
+    debug(debug)
     {
         hitboxs.push_back(hitboxTop);
         hitboxs.push_back(hitboxLeftTop);
@@ -339,78 +341,78 @@ void Terrain::render(gf::RenderTarget& target) {
         target.draw(sprite);
 
         //debug
-        
-        gf::RectangleShape hitboxShapeTop;
-        hitboxShapeTop.setPosition(hitboxTop.getCenter());
-        hitboxShapeTop.setSize(hitboxTop.getSize());
-        hitboxShapeTop.setColor(gf::Color::Transparent);
-        hitboxShapeTop.setOutlineColor(gf::Color::Green);
-        hitboxShapeTop.setOutlineThickness(1.5f);
-        hitboxShapeTop.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeTop);
-        
-        gf::RectangleShape hitboxShapeLeftTop;
-        hitboxShapeLeftTop.setPosition(hitboxLeftTop.getCenter());
-        hitboxShapeLeftTop.setSize(hitboxLeftTop.getSize());
-        hitboxShapeLeftTop.setColor(gf::Color::Transparent);
-        hitboxShapeLeftTop.setOutlineColor(gf::Color::Green);
-        hitboxShapeLeftTop.setOutlineThickness(1.5f);
-        hitboxShapeLeftTop.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeLeftTop);
+        if(debug){
+            gf::RectangleShape hitboxShapeTop;
+            hitboxShapeTop.setPosition(hitboxTop.getCenter());
+            hitboxShapeTop.setSize(hitboxTop.getSize());
+            hitboxShapeTop.setColor(gf::Color::Transparent);
+            hitboxShapeTop.setOutlineColor(gf::Color::Green);
+            hitboxShapeTop.setOutlineThickness(1.5f);
+            hitboxShapeTop.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeTop);
+            
+            gf::RectangleShape hitboxShapeLeftTop;
+            hitboxShapeLeftTop.setPosition(hitboxLeftTop.getCenter());
+            hitboxShapeLeftTop.setSize(hitboxLeftTop.getSize());
+            hitboxShapeLeftTop.setColor(gf::Color::Transparent);
+            hitboxShapeLeftTop.setOutlineColor(gf::Color::Green);
+            hitboxShapeLeftTop.setOutlineThickness(1.5f);
+            hitboxShapeLeftTop.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeLeftTop);
 
-        gf::RectangleShape hitboxShapeRightTop;
-        hitboxShapeRightTop.setPosition(hitboxRightTop.getCenter());
-        hitboxShapeRightTop.setSize(hitboxRightTop.getSize());
-        hitboxShapeRightTop.setColor(gf::Color::Transparent);
-        hitboxShapeRightTop.setOutlineColor(gf::Color::Green);
-        hitboxShapeRightTop.setOutlineThickness(1.5f);
-        hitboxShapeRightTop.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeRightTop);
+            gf::RectangleShape hitboxShapeRightTop;
+            hitboxShapeRightTop.setPosition(hitboxRightTop.getCenter());
+            hitboxShapeRightTop.setSize(hitboxRightTop.getSize());
+            hitboxShapeRightTop.setColor(gf::Color::Transparent);
+            hitboxShapeRightTop.setOutlineColor(gf::Color::Green);
+            hitboxShapeRightTop.setOutlineThickness(1.5f);
+            hitboxShapeRightTop.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeRightTop);
 
-        gf::RectangleShape hitboxShapeBottom;
-        hitboxShapeBottom.setPosition(hitboxBottom.getCenter());
-        hitboxShapeBottom.setSize(hitboxBottom.getSize());
-        hitboxShapeBottom.setColor(gf::Color::Transparent);
-        hitboxShapeBottom.setOutlineColor(gf::Color::Green);
-        hitboxShapeBottom.setOutlineThickness(1.5f);
-        hitboxShapeBottom.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeBottom);
+            gf::RectangleShape hitboxShapeBottom;
+            hitboxShapeBottom.setPosition(hitboxBottom.getCenter());
+            hitboxShapeBottom.setSize(hitboxBottom.getSize());
+            hitboxShapeBottom.setColor(gf::Color::Transparent);
+            hitboxShapeBottom.setOutlineColor(gf::Color::Green);
+            hitboxShapeBottom.setOutlineThickness(1.5f);
+            hitboxShapeBottom.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeBottom);
 
-        gf::RectangleShape hitboxShapeLeftBottom;
-        hitboxShapeLeftBottom.setPosition(hitboxLeftBottom.getCenter());
-        hitboxShapeLeftBottom.setSize(hitboxLeftBottom.getSize());
-        hitboxShapeLeftBottom.setColor(gf::Color::Transparent);
-        hitboxShapeLeftBottom.setOutlineColor(gf::Color::Green);
-        hitboxShapeLeftBottom.setOutlineThickness(1.5f);
-        hitboxShapeLeftBottom.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeLeftBottom);
+            gf::RectangleShape hitboxShapeLeftBottom;
+            hitboxShapeLeftBottom.setPosition(hitboxLeftBottom.getCenter());
+            hitboxShapeLeftBottom.setSize(hitboxLeftBottom.getSize());
+            hitboxShapeLeftBottom.setColor(gf::Color::Transparent);
+            hitboxShapeLeftBottom.setOutlineColor(gf::Color::Green);
+            hitboxShapeLeftBottom.setOutlineThickness(1.5f);
+            hitboxShapeLeftBottom.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeLeftBottom);
 
-        gf::RectangleShape hitboxShapeRightBottom;
-        hitboxShapeRightBottom.setPosition(hitboxRightBottom.getCenter());
-        hitboxShapeRightBottom.setSize(hitboxRightBottom.getSize());
-        hitboxShapeRightBottom.setColor(gf::Color::Transparent);
-        hitboxShapeRightBottom.setOutlineColor(gf::Color::Green);
-        hitboxShapeRightBottom.setOutlineThickness(1.5f);
-        hitboxShapeRightBottom.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeRightBottom);
+            gf::RectangleShape hitboxShapeRightBottom;
+            hitboxShapeRightBottom.setPosition(hitboxRightBottom.getCenter());
+            hitboxShapeRightBottom.setSize(hitboxRightBottom.getSize());
+            hitboxShapeRightBottom.setColor(gf::Color::Transparent);
+            hitboxShapeRightBottom.setOutlineColor(gf::Color::Green);
+            hitboxShapeRightBottom.setOutlineThickness(1.5f);
+            hitboxShapeRightBottom.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeRightBottom);
 
-        gf::RectangleShape hitboxShapeGoalLeft;
-        hitboxShapeGoalLeft.setPosition(hitboxGoalLeft.getCenter());
-        hitboxShapeGoalLeft.setSize(hitboxGoalLeft.getSize());
-        hitboxShapeGoalLeft.setColor(gf::Color::Violet);
-        hitboxShapeGoalLeft.setOutlineColor(gf::Color::Violet);
-        hitboxShapeGoalLeft.setOutlineThickness(1.5f);
-        hitboxShapeGoalLeft.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeGoalLeft);
+            gf::RectangleShape hitboxShapeGoalLeft;
+            hitboxShapeGoalLeft.setPosition(hitboxGoalLeft.getCenter());
+            hitboxShapeGoalLeft.setSize(hitboxGoalLeft.getSize());
+            hitboxShapeGoalLeft.setColor(gf::Color::Violet);
+            hitboxShapeGoalLeft.setOutlineColor(gf::Color::Violet);
+            hitboxShapeGoalLeft.setOutlineThickness(1.5f);
+            hitboxShapeGoalLeft.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeGoalLeft);
 
-        gf::RectangleShape hitboxShapeGoalRight;
-        hitboxShapeGoalRight.setPosition(hitboxGoalRight.getCenter());
-        hitboxShapeGoalRight.setSize(hitboxGoalRight.getSize());
-        hitboxShapeGoalRight.setColor(gf::Color::Violet);
-        hitboxShapeGoalRight.setOutlineColor(gf::Color::Violet);
-        hitboxShapeGoalRight.setOutlineThickness(1.5f);
-        hitboxShapeGoalRight.setAnchor(gf::Anchor::Center);
-        target.draw(hitboxShapeGoalRight);
-        
+            gf::RectangleShape hitboxShapeGoalRight;
+            hitboxShapeGoalRight.setPosition(hitboxGoalRight.getCenter());
+            hitboxShapeGoalRight.setSize(hitboxGoalRight.getSize());
+            hitboxShapeGoalRight.setColor(gf::Color::Violet);
+            hitboxShapeGoalRight.setOutlineColor(gf::Color::Violet);
+            hitboxShapeGoalRight.setOutlineThickness(1.5f);
+            hitboxShapeGoalRight.setAnchor(gf::Anchor::Center);
+            target.draw(hitboxShapeGoalRight);
+        }
     }    
 }

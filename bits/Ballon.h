@@ -13,7 +13,7 @@
 
 class Ballon : public gf::Entity{
     public:
-        Ballon(gf::ResourceManager& resources);
+        Ballon(gf::ResourceManager& resources, bool debug);
 
         void engagement();
 
@@ -36,6 +36,8 @@ class Ballon : public gf::Entity{
         bool pushed;
         bool marche;
         float depth_marche;
+
+        bool debug;        
 };
 
 #endif  //BALLON_H

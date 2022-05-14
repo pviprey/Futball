@@ -12,7 +12,7 @@ namespace{
     static constexpr float BALLON_ACCELERATION = -300.0f;
 }
 
-Ballon::Ballon(gf::ResourceManager& resources):texture(resources.getTexture("Ball/ball_soccer4.png")){
+Ballon::Ballon(gf::ResourceManager& resources, bool debug):texture(resources.getTexture("Ball/ball_soccer4.png")), debug(debug){
     engagement();
 }
 
@@ -79,12 +79,14 @@ void Ballon::render(gf::RenderTarget& target){
     target.draw(shape);
 
     //debug
-    gf::CircleShape hitboxShape;
-    hitboxShape.setRadius(hitbox.getRadius());
-    hitboxShape.setPosition(hitbox.getCenter());
-    hitboxShape.setColor(gf::Color::Transparent);
-    hitboxShape.setOutlineColor(gf::Color::Green);
-    hitboxShape.setOutlineThickness(3.0f);
-    hitboxShape.setAnchor(gf::Anchor::Center);
-    target.draw(hitboxShape);    
+    if(debug){
+        gf::CircleShape hitboxShape;
+        hitboxShape.setRadius(hitbox.getRadius());
+        hitboxShape.setPosition(hitbox.getCenter());
+        hitboxShape.setColor(gf::Color::Transparent);
+        hitboxShape.setOutlineColor(gf::Color::Green);
+        hitboxShape.setOutlineThickness(3.0f);
+        hitboxShape.setAnchor(gf::Anchor::Center);
+        target.draw(hitboxShape);
+    }
 }

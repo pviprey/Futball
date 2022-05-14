@@ -19,7 +19,7 @@ namespace{
 
 class Joueur : public gf::Entity{
     public:
-        Joueur(int poste, int style, gf::ResourceManager& resources, bool sens);
+        Joueur(int poste, int style, gf::ResourceManager& resources, bool sens, bool debug);
 
         void engagement();
 
@@ -73,6 +73,7 @@ class Joueur : public gf::Entity{
         bool current;
         bool interacting;
 
+        bool debug;
         // gf::Vector2f mousePosition;
 };
 

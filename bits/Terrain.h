@@ -19,7 +19,7 @@
 
 class Terrain : public gf::Entity{
     public:
-        Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources);
+        Terrain(const gf::TextureAtlas& atlas, gf::ResourceManager& resources, bool debug);
 
         std::vector<gf::RectF>& getHitboxs();
         std::vector<gf::RectF>& getGoals();
@@ -121,6 +121,7 @@ class Terrain : public gf::Entity{
         };
 
         gf::Array2D<Texture, int> tiles;
+        bool debug;
 };
 
 #endif  //TERRAIN_H

@@ -16,8 +16,8 @@
 
 class Equipe{
     public:
-        Equipe(bool sens);
-        Equipe(std::vector<Joueur> equipe, bool sens);
+        Equipe(bool sens, bool debug);
+        Equipe(std::vector<Joueur> equipe, bool sens, bool debug);
 
         bool addJoueur(int poste, int style,  gf::ResourceManager& resources);
 
@@ -35,6 +35,7 @@ class Equipe{
     private:
         std::vector<Joueur> composition;
         bool sens;
+        bool debug;
 
         bool addJoueur(const Joueur& joueur);
         bool hasGoal();

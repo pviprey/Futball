@@ -19,7 +19,13 @@
 #include "bits/Physics.h"
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    bool debug = false;
+    if(argc == 2 && (std::string(argv[1]) == "--debug" || std::string(argv[1]) == "-d")){
+        printf("%s", argv[1]);
+        debug = true;
+    }
+
     // Create the main window and the renderer
     gf::Window window("Futsall", { 1024, 768 });
     window.setVerticalSyncEnabled(true);
@@ -46,12 +52,12 @@ int main() {
     resources.addSearchDir("data");
     gf::TextureAtlas atlas("futsal_spritesheet.xml", resources);
 
-    Terrain terrain(atlas, resources);
+    Terrain terrain(atlas, resources, debug);
     terrain.setData();
 
-    Ballon ballon(resources);
+    Ballon ballon(resources, debug);
 
-    Equipe equipeLeft = Equipe(true);
+    Equipe equipeLeft = Equipe(true, debug);
     equipeLeft.addJoueur(0, 1, resources);
     equipeLeft.addJoueur(1, 2, resources);
     equipeLeft.addJoueur(1, 1, resources);
@@ -59,7 +65,7 @@ int main() {
     equipeLeft.addJoueur(2, 2, resources);
     equipeLeft.switchCurrentToClosest(ballon);
 
-    Equipe equipeRight = Equipe(false);
+    Equipe equipeRight = Equipe(false, debug);
     equipeRight.addJoueur(0, 0, resources);
     equipeRight.addJoueur(1, 1, resources);
     equipeRight.addJoueur(1, 2, resources);

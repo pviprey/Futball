@@ -7,17 +7,19 @@ namespace{
     constexpr int TAILLE_EQUIPE = 5;
 }
 
-Equipe::Equipe(bool sens):
-    sens(sens){}
+Equipe::Equipe(bool sens, bool debug):
+    sens(sens),
+    debug(debug){}
 
-Equipe::Equipe(std::vector<Joueur> equipe, bool sens):
+Equipe::Equipe(std::vector<Joueur> equipe, bool sens, bool debug):
     composition(equipe),
-    sens(sens){
+    sens(sens),
+    debug(debug){
         disposition();
 }
 
 bool Equipe::addJoueur(int poste, int style, gf::ResourceManager& resources){
-    return addJoueur(Joueur(poste, style, resources, sens));
+    return addJoueur(Joueur(poste, style, resources, sens, debug));
 }
 
 void Equipe::engagement(bool possession){
